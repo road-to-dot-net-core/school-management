@@ -12,7 +12,7 @@ using School.Service;
 namespace School.Api.Controllers
 {
     [ApiController]
-    [Route("LevelClass")]
+    [Route("[controller]")]
     public class LevelClassController : Controller
     {
         private readonly ILevelClassService _levelClassService;

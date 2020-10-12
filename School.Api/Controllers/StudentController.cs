@@ -17,7 +17,7 @@ namespace School.Api.Controllers
             return View();
         }
 
-        public bool Register(RegisterUserRequest req)
+        public bool Register(RegisterStudentRequest req)
         {
             return true;
         }
