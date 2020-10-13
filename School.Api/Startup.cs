@@ -19,6 +19,7 @@ using FluentValidation;
 using School.Api.Requests;
 using School.Api.Validations;
 using FluentValidation.AspNetCore;
+using School.Api.Options;
 
 namespace School.Api
 {
@@ -47,6 +48,8 @@ namespace School.Api
             services.AddScoped<ILevelClassRepository, LevelClassRepository>();
             services.AddScoped<ILevelClassService, LevelClassService>();
 
+            services.AddSwaggerGen();
+
             services.AddControllers().AddFluentValidation();
 
         }
@@ -58,6 +61,19 @@ namespace School.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+
+            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
+            });
+
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

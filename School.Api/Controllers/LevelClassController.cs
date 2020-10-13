@@ -22,10 +22,8 @@ namespace School.Api.Controllers
             _levelClassService = levelClassService;
         }
 
-
         [HttpGet]
         public IActionResult Get() => Ok("School Api is online");
-
 
         [HttpPost("insert")]
         public IActionResult Insert(AddLevelClassRequest req)
