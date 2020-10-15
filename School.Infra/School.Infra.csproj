@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Schools.Domain\Schools.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstractions\" />
+    <Folder Include="Repositories\Access Control\" />
+  </ItemGroup>
+
 </Project>

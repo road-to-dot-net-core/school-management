@@ -41,7 +41,14 @@ namespace School.Api
                 .UseLazyLoadingProxies();
 
             });
-           // services.AddFluentValidation();
+
+            services.AddDbContextPool<AccessControlContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("SchoolConnectionString"))
+                .UseLazyLoadingProxies();
+
+            });
+            // services.AddFluentValidation();
             services.AddSingleton<IValidator<AddLevelClassRequest>, AddLevelClassReqValidator>();
 
 

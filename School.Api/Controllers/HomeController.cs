@@ -13,7 +13,7 @@ namespace School.Api.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View();
+            return Ok(new { text = "School Api is online" });
         }
     }
 }

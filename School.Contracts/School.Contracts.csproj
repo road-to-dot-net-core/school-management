@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Requests\Sudents\" />
+    <Folder Include="Requests\Levels\" />
+    <Folder Include="Requests\Students\" />
+    <Folder Include="Responses\" />
   </ItemGroup>
 
 </Project>
