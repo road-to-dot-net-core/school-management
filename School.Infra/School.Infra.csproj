@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\School\20201016162043_update branch class.cs" />
+    <Compile Remove="Migrations\School\20201016162043_update branch class.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
@@ -24,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
-    <Folder Include="Repositories\Access Control\" />
   </ItemGroup>
 
 </Project>

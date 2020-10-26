@@ -26,6 +26,12 @@ namespace School.Infra.Mapping.Access_Control
             builder.Property(aa => aa.Label).HasColumnName("Label").HasMaxLength(50).IsRequired();
             builder.Property(aa => aa.Description).HasColumnName("Description").HasMaxLength(250);
 
+
+            builder.Ignore(aa => aa.Deleted);
+            builder.Property(aa => aa.DeleteReason).HasColumnName("DeletReason").HasDefaultValue(null).HasMaxLength(250).IsRequired(false);
+            builder.Property(aa => aa.DeletedBy).HasColumnName("DeletedBy").HasDefaultValue(null).IsRequired(false);
+            builder.Property(aa => aa.DeletedOn).HasColumnName("DeletedOn").HasDefaultValue(null).IsRequired(false);
+
         }
     }
 }

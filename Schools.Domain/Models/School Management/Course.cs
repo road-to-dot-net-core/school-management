@@ -1,4 +1,5 @@
 ﻿using Schools.Domain.Models;
+using Schools.Domain.Models.School_Management;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,5 +31,8 @@ namespace Schools.Domain
 
         public virtual ICollection<CourseInstructor> CourseInstructors { get; set; }
         public virtual ICollection<Course> SubCourses { get; set; }
+
+        public Guid BranchId { get; set; }
+        public virtual  Branch Branch { get; set; }
     }
 }

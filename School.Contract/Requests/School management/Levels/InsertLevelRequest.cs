@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace School.Api.Requests
+namespace School.Api.Contracts.Levels
 {
-    public class AddLevelClassRequest
+    public class InsertLevelClassRequest
     {
         public string Name { get; set; }
         public int Level { get; set; }

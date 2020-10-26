@@ -1,4 +1,4 @@
-﻿using School.Common.Dtos;
+﻿
 using School.Domain.Repositories;
 using Schools.Domain;
 using System.Collections.Generic;
@@ -15,10 +15,10 @@ namespace School.Service
             _levelClassRepository = levelClassRepository;
         }
 
-        public IEnumerable<LevelClassDto> GetAll()
-        {
-            return _levelClassRepository.GetAll();
-        }
+        //public IEnumerable<LevelClassDto> GetAll()
+        //{
+        //    return _levelClassRepository.GetAll();
+        //}
 
         public bool InsertLevelClass(string name,int level)
         {

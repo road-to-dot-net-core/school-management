@@ -19,6 +19,7 @@ namespace School.Infra.Mapping.Access_Control
             builder.Property(a => a.Timestamp).IsRowVersion();
 
 
+
             builder.HasOne(a => a.Permission)
                    .WithMany(a => a.PermissionFeatures)
                    .HasForeignKey(a => a.PermissionId)

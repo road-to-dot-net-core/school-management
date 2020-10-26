@@ -1,4 +1,5 @@
 ﻿using Schools.Domain.Models;
+using Schools.Domain.Models.School_Management;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,9 @@ namespace Schools.Domain
         public string ClassName { get; private set; }
         public Guid LevelId { get;private set; }
         public virtual Level Level { get; set; }
+
+        public Guid BranchId { get; set; }
+        public virtual Branch Branch { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
 

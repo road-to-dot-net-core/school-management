@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Schools.Domain.Models.Access_Control
 {
-    public class Feature:BaseEntity
+    public class Feature : BaseEntity
     {
         public String Label { get; private set; }
         public String Description { get; private set; }
@@ -14,6 +14,15 @@ namespace Schools.Domain.Models.Access_Control
 
         public Feature()
         {
+
+        }
+        public Feature(string label, string action, string controller, string controllerActionName, string description)
+        {
+            Label = label;
+            Action = action;
+            Controller = controller;
+            ControllerActionName = controllerActionName;
+            Description = description;
 
         }
 

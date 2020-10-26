@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace School.Api.Controllers
 {
+    [Route("")]
     public class HomeController : Controller
     {
         // GET: /<controller>/
+        [HttpGet("")]
         public IActionResult Index()
         {
             return Ok(new { text = "School Api is online" });

@@ -39,7 +39,8 @@ namespace School.Infra.Migrations
 
                     b.Property<string>("ControllerActionName")
                         .HasColumnName("ControllerActionName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<Guid?>("CreatedBy")
                         .ValueGeneratedOnAdd()
@@ -51,7 +52,26 @@ namespace School.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CreatedOn")
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 10, 15, 17, 0, 6, 212, DateTimeKind.Local).AddTicks(3295));
+                        .HasDefaultValue(new DateTime(2020, 10, 19, 22, 19, 43, 986, DateTimeKind.Local).AddTicks(8519));
+
+                    b.Property<string>("DeleteReason")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletReason")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250)
+                        .HasDefaultValue(null);
+
+                    b.Property<Guid?>("DeletedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValue(null);
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedOn")
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(null);
 
                     b.Property<string>("Description")
                         .HasColumnName("Description")
@@ -101,7 +121,26 @@ namespace School.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CreatedOn")
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 10, 15, 17, 0, 6, 248, DateTimeKind.Local).AddTicks(2872));
+                        .HasDefaultValue(new DateTime(2020, 10, 19, 22, 19, 44, 22, DateTimeKind.Local).AddTicks(977));
+
+                    b.Property<string>("DeleteReason")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletReason")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250)
+                        .HasDefaultValue(null);
+
+                    b.Property<Guid?>("DeletedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValue(null);
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedOn")
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(null);
 
                     b.Property<string>("Description")
                         .HasColumnName("Description")
@@ -165,6 +204,9 @@ namespace School.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("CanBeDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("CreatedBy")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CreatedBy")
@@ -175,7 +217,26 @@ namespace School.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CreatedOn")
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 10, 15, 17, 0, 6, 251, DateTimeKind.Local).AddTicks(3577));
+                        .HasDefaultValue(new DateTime(2020, 10, 19, 22, 19, 44, 25, DateTimeKind.Local).AddTicks(4564));
+
+                    b.Property<string>("DeleteReason")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletReason")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250)
+                        .HasDefaultValue(null);
+
+                    b.Property<Guid?>("DeletedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValue(null);
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedOn")
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(null);
 
                     b.Property<string>("Description")
                         .HasColumnName("Description")
@@ -229,7 +290,26 @@ namespace School.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CreatedOn")
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 10, 15, 17, 0, 6, 254, DateTimeKind.Local).AddTicks(1015));
+                        .HasDefaultValue(new DateTime(2020, 10, 19, 22, 19, 44, 28, DateTimeKind.Local).AddTicks(7472));
+
+                    b.Property<string>("DeleteReason")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletReason")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250)
+                        .HasDefaultValue(null);
+
+                    b.Property<Guid?>("DeletedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValue(null);
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedOn")
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(null);
 
                     b.Property<Guid>("PermissionId")
                         .HasColumnType("uniqueidentifier");
@@ -269,11 +349,7 @@ namespace School.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AddressLine1")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("AddressLine2")
+                    b.Property<string>("AddressLine")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
@@ -287,7 +363,26 @@ namespace School.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("CreatedOn")
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 10, 15, 17, 0, 6, 263, DateTimeKind.Local).AddTicks(9887));
+                        .HasDefaultValue(new DateTime(2020, 10, 19, 22, 19, 44, 33, DateTimeKind.Local).AddTicks(6943));
+
+                    b.Property<string>("DeleteReason")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletReason")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250)
+                        .HasDefaultValue(null);
+
+                    b.Property<Guid?>("DeletedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValue(null);
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("DeletedOn")
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(null);
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -300,6 +395,9 @@ namespace School.Infra.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("LastConnexionOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -308,6 +406,12 @@ namespace School.Infra.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
+
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(50)")

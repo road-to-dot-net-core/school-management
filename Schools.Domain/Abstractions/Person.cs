@@ -17,8 +17,7 @@ namespace Schools.Domain.Abstractions
         public virtual string Notes { get; set; }
         public virtual string Email { get; set; }
         public virtual string Phone { get; set; }
-        public virtual string AddressLine1 { get; set; }
-        public virtual string AddressLine2 { get; set; }
+        public virtual string AddressLine { get; set; }
         public bool IsActive { get; set; }
         public string FullName
         {

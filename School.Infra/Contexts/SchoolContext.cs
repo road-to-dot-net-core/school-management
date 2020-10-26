@@ -3,6 +3,7 @@ using School.Infra.Mapping;
 using School.Infra.Mapping.School_Management;
 using Schools.Domain;
 using Schools.Domain.Models;
+using Schools.Domain.Models.School_Management;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,6 +39,7 @@ namespace School.Infra
             modelBuilder.ApplyConfiguration(new StudentMap());
           
             modelBuilder.ApplyConfiguration(new CourseOfferingMap());
+            modelBuilder.ApplyConfiguration(new BranchMap());
 
 
             base.OnModelCreating(modelBuilder);
@@ -62,8 +64,10 @@ namespace School.Infra
 
         public virtual DbSet<Room> Rooms { get; set; }
 
+        public virtual DbSet<Branch> Branchs { get; set; }
 
-      
+
+
 
 
     }

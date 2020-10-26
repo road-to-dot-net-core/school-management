@@ -12,8 +12,4 @@
     <ProjectReference Include="..\School.Common\School.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\Access Control\" />
-  </ItemGroup>
-
 </Project>

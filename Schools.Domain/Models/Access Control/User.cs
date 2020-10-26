@@ -1,4 +1,5 @@
-﻿using Schools.Domain.Abstractions;
+﻿using School.Common.Auth;
+using Schools.Domain.Abstractions;
 using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,56 @@ namespace Schools.Domain.Models
 {
     public class User : Person
     {
-        public Guid RoleId { get; set; }
-        public virtual Role Role { get; set; }
+        public Guid RoleId { get; private set; }
+        public virtual Role Role { get; private set; }
+
+        public byte[] PasswordHash { get; private set; }
+        public byte[] PasswordSalt { get; private set; }
+        public DateTime? LastConnexionOn { get; private set; }
+
+
         public User()
         {
 
         }
+        public User(string firstName, string lastName, string password, string email, Guid roleId, Guid createdBy, IEncrypter encrypter)
+        {
+            Id = Guid.NewGuid();
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            RoleId = roleId;
+            IsActive = true;
+            CreatedBy = createdBy;
+            CreatedOn = DateTime.UtcNow;
+            SetPassword(password, encrypter);
+        }
 
+        public void EditBasicInfo(string firstName, string lastName, string address, string phone)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            AddressLine = address;
+            Phone = phone;
+        }
 
+        public void ChangeEmail(string email)
+        {
+            Email = email;
+        }
+
+        private void SetPassword(string password, IEncrypter encrypter)
+        {
+            byte[] passwordSalt = encrypter.GetSalt();
+            byte[] passwordHash = encrypter.GetHash(password, passwordSalt);
+
+            PasswordSalt = passwordSalt;
+            PasswordHash = passwordHash;
+        }
+
+        public bool VerifyPassword(string password, IEncrypter encrypter)
+        {
+            return PasswordHash.Equals(encrypter.GetHash(password, PasswordSalt));
+        }
     }
 }

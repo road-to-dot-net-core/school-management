@@ -26,6 +26,8 @@ namespace Schools.Domain.Models
 
         public Guid CourseOfferingId { get; set; }
         public virtual CourseOffering CourseOffering { get; set; }
+
+        public CourseOfferingDayFrequency Frequency { get; set; }
         public CourseOfferingDay()
         {
 

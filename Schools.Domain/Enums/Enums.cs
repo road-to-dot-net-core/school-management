@@ -20,6 +20,13 @@ namespace Schools.Domain.Enums
         Canceled
     }
 
+    public enum CourseOfferingDayFrequency
+    {
+        Weekly,
+        EveyTwoWeeks,
+        Monthly   
+    }
+
     [Flags]
     public enum Days
     {

@@ -23,7 +23,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Schools.Domain.Category">
-    <Position X="4.25" Y="4.5" Width="2" />
+    <Position X="6.75" Y="5.75" Width="2" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -39,19 +39,20 @@
     </Compartments>
     <AssociationLine Name="Parent" Type="Schools.Domain.Course" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="0.5" Y="4.25" />
-        <Point X="0.25" Y="4.25" />
-        <Point X="0.25" Y="5.312" />
-        <Point X="0.5" Y="5.312" />
+        <Point X="0.5" Y="4.18" />
+        <Point X="0.25" Y="4.18" />
+        <Point X="0.25" Y="5.182" />
+        <Point X="0.5" Y="5.182" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAiAkAAEAAAQAAAAAAAAAAAAgABQAAACAA=</HashCode>
+      <HashCode>AAAAAAAAAAAiAkAAEAABQAAAAAAAAAgAAgABQAAACAA=</HashCode>
       <FileName>Models\School Management\Course.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Parent" />
       <Property Name="Category" />
+      <Property Name="Branch" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Schools.Domain.CourseOffering">
@@ -63,10 +64,10 @@
       <Path>
         <Point X="5.5" Y="2.94" />
         <Point X="8.834" Y="2.94" />
-        <Point X="8.834" Y="5.625" />
-        <Point X="10.605" Y="5.625" Type="JumpStart" />
-        <Point X="10.771" Y="5.625" Type="JumpEnd" />
-        <Point X="11.25" Y="5.625" />
+        <Point X="8.834" Y="5.529" />
+        <Point X="10.105" Y="5.529" Type="JumpStart" />
+        <Point X="10.271" Y="5.529" Type="JumpEnd" />
+        <Point X="12" Y="5.529" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="DefaultRoom" Type="Schools.Domain.Room" FixedFromPoint="true">
@@ -125,16 +126,17 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Schools.Domain.LevelClass">
-    <Position X="11.25" Y="4.5" Width="2" />
+    <Position X="12" Y="4.5" Width="2" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAACAAAAAAAAAAAAAABAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAAACAAAAAAAABAAAAABAAAAgBAAAAAAAAAAA=</HashCode>
       <FileName>Models\School Management\LevelClass.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Level" />
+      <Property Name="Branch" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Schools.Domain.Room">
@@ -165,7 +167,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Schools.Domain.Models.Level">
-    <Position X="6.5" Y="5.75" Width="2" />
+    <Position X="15.25" Y="2.75" Width="2" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -182,11 +184,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Schools.Domain.Models.AdminStaff">
-    <Position X="10.5" Y="6.75" Width="1.5" />
+    <Position X="10" Y="5.75" Width="1.5" />
     <InheritanceLine Type="Schools.Domain.Abstractions.Person" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="10.688" Y="3.951" />
-        <Point X="10.688" Y="6.75" />
+        <Point X="10.688" Y="5.125" />
+        <Point X="10.188" Y="5.125" />
+        <Point X="10.188" Y="5.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -198,23 +202,23 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Schools.Domain.Models.Organization">
-    <Position X="13" Y="6.75" Width="1.5" />
+    <Position X="9" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\School Management\Organization.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Schools.Domain.Models.CourseInstructor">
-    <Position X="1.75" Y="6.75" Width="1.5" />
+    <Position X="1.75" Y="7" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <AssociationLine Name="Instructor" Type="Schools.Domain.Instructor" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="2.781" Y="6.75" />
+        <Point X="2.781" Y="7" />
         <Point X="2.781" Y="4.312" />
-        <Point X="3.557" Y="4.312" Type="JumpStart" />
-        <Point X="3.724" Y="4.312" Type="JumpEnd" />
+        <Point X="4.667" Y="4.312" Type="JumpStart" />
+        <Point X="4.833" Y="4.312" Type="JumpEnd" />
         <Point X="6.75" Y="4.312" />
       </Path>
     </AssociationLine>
@@ -228,14 +232,21 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Schools.Domain.Models.CourseOfferingDay">
-    <Position X="4.25" Y="6.75" Width="2" />
+    <Position X="4" Y="4.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAEAAAAQAAQAAAAIAAgAAAAAAAAAAgAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAEAAAAQAAQAAAAIIAgAAAAAAAAAAgAAAA=</HashCode>
       <FileName>Models\School Management\CourseOfferingDay.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="CourseOffering" />
     </ShowAsAssociation>
+  </Class>
+  <Class Name="Schools.Domain.Models.School_Management.Branch">
+    <Position X="5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\School Management\Branch.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9.22" />
 </ClassDiagram>

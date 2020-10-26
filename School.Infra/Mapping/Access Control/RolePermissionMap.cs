@@ -13,11 +13,7 @@ namespace School.Infra.Mapping.Access_Control
         {
             builder.ToTable("ROLE_PERMISSIONS");
             builder.HasKey(a => a.Id);
-            //builder.HasKey(a => new
-            //{
-            //    a.PermissionId,
-            //    a.RoleId
-            //});
+
             builder.Property(aa => aa.CreatedOn).HasColumnName("CreatedOn").HasDefaultValue(DateTime.Now).IsRequired(true);
             builder.Property(aa => aa.CreatedBy).HasColumnName("CreatedBy").HasDefaultValue(null).IsRequired(false);
 
@@ -27,6 +23,12 @@ namespace School.Infra.Mapping.Access_Control
 
 
             builder.Property(a => a.AssociatedOn).IsRequired();
+
+            builder.Ignore(aa => aa.Deleted);
+            builder.Property(aa => aa.DeleteReason).HasColumnName("DeletReason").HasDefaultValue(null).HasMaxLength(250).IsRequired(false);
+            builder.Property(aa => aa.DeletedBy).HasColumnName("DeletedBy").HasDefaultValue(null).IsRequired(false);
+            builder.Property(aa => aa.DeletedOn).HasColumnName("DeletedOn").HasDefaultValue(null).IsRequired(false);
+
 
             builder.HasOne(a => a.Role)
                             .WithMany(a => a.RolePermissions)

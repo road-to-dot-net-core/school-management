@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using School.Domain.Repositories;
 using System.Linq;
-using School.Common.Dtos;
+
 using System.Security.Cryptography;
 
 namespace School.Infra.Repositories
@@ -18,18 +18,18 @@ namespace School.Infra.Repositories
             _schoolContext = schoolContext;
         }
 
-        public IEnumerable<LevelClassDto> GetAll()
-        {
-            IEnumerable<LevelClassDto> levelClasses;
-            levelClasses = (from x in _schoolContext.LevelClasses
-                            select new LevelClassDto
-                            {
-                                Name = x.ClassName,
+        //public IEnumerable<LevelClassDto> GetAll()
+        //{
+        //    IEnumerable<LevelClassDto> levelClasses;
+        //    levelClasses = (from x in _schoolContext.LevelClasses
+        //                    select new LevelClassDto
+        //                    {
+        //                        Name = x.ClassName,
                                
-                            });
+        //                    });
 
-            return levelClasses;
-        }
+        //    return levelClasses;
+        //}
 
         public bool InsertLevelRepository(LevelClass levelClass)
         {

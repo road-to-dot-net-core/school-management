@@ -25,6 +25,11 @@ namespace School.Infra.Mapping
 
             builder.Property(aa => aa.AssociatedOn).HasColumnName("AssociatedOn").HasDefaultValue(DateTime.Now).IsRequired(true);
 
+            builder.Ignore(aa => aa.Deleted);
+            builder.Property(aa => aa.DeleteReason).HasColumnName("DeletReason").HasDefaultValue(null).HasMaxLength(250).IsRequired(false);
+            builder.Property(aa => aa.DeletedBy).HasColumnName("DeletedBy").HasDefaultValue(null).IsRequired(false);
+            builder.Property(aa => aa.DeletedOn).HasColumnName("DeletedOn").HasDefaultValue(null).IsRequired(false);
+
 
             builder.HasOne(a => a.Course)
                 .WithMany(a => a.CourseInstructors)

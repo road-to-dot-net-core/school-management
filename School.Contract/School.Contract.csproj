@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Requests\Access Control\Permissions\" />
+    <Folder Include="Requests\Access Control\Roles\" />
+    <Folder Include="Requests\School management\Sudents\" />
+    <Folder Include="Response\School management\" />
+  </ItemGroup>
+
+</Project>

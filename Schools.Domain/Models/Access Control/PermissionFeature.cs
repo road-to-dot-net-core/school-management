@@ -6,13 +6,13 @@ namespace Schools.Domain.Models.Access_Control
 {
     public class PermissionFeature
     {
-        public Guid PermissionId { get; set; }
-        public Guid FeatureId { get; set; }
+        public Guid PermissionId { get; private  set; }
+        public Guid FeatureId { get; private set; }
         public byte[] Timestamp { get; private set; }
 
-        public DateTime AssociatedOn { get; set; }
-        public virtual Feature Feature { get; set; }
-        public virtual Permission Permission { get; set; }
+        public DateTime AssociatedOn { get; private set; }
+        public virtual Feature Feature { get; private set; }
+        public virtual Permission Permission { get; private set; }
 
         private PermissionFeature(Guid permissionId, Guid featureId)
         {

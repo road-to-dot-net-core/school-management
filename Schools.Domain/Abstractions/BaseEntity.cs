@@ -10,5 +10,12 @@ namespace Schools.Domain.Models
         public DateTime CreatedOn { get; set; }
         public Guid? CreatedBy { get; set; }
         public byte[] Timestamp { get; set; }
+
+        public Guid? DeletedBy { get; set; }
+        public DateTime? DeletedOn { get; set; }
+        public bool Deleted { get { return DeletedOn != null; } }
+        public string DeleteReason { get; private set; }
+
+
     }
 }

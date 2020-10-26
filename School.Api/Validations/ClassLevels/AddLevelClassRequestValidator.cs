@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using School.Api.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace School.Api.Validations
 {
-    public class AddLevelClassRequestValidator: AbstractValidator<InsertLevelClassRequest>
-    {
+    //public class AddLevelClassRequestValidator: AbstractValidator<InsertLevelClassRequest>
+    //{
 
-        public AddLevelClassRequestValidator()
-        {
-            RuleFor(x => x.Name)
-             .NotEmpty()
-             .WithMessage("Name is mandatory.");
+    //    public AddLevelClassRequestValidator()
+    //    {
+    //        RuleFor(x => x.Name)
+    //         .NotEmpty()
+    //         .WithMessage("Name is mandatory.");
 
-            RuleFor(x => x.Level)
-             .NotEmpty()
-             .WithMessage("Level is mandatory.");
+    //        RuleFor(x => x.Level)
+    //         .NotEmpty()
+    //         .WithMessage("Level is mandatory.");
 
-        }
-    }
+    //    }
+    //}
 }
