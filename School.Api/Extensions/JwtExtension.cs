@@ -7,41 +7,53 @@ using School.Common.Auth;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace School.Api.Extensions
 {
     public static class JwtExtension
     {
-        public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
+
+        public static IServiceCollection AddJwtToken(this IServiceCollection services, IConfiguration configuration)
         {
+            var jwtOptions = configuration.GetSection("jwt");
+            services.Configure<JwtOptions>(jwtOptions);
+
+            var jwtOpt = jwtOptions.Get<JwtOptions>();
+            var key = Encoding.ASCII.GetBytes(jwtOpt.SecretKey);
             services.AddSingleton<IEncrypter, Encrypter>();
-            var options = new JwtOptions();
+            services.AddScoped<IJwtHandler, JwtHandler>();
 
-            var section = configuration.GetSection("jwt");
-            section.Bind(options);
-            services.Configure<JwtOptions>(configuration.GetSection("jwt"));
-            services.AddSingleton<IJwtHandler, JwtHandler>();
-            services.AddAuthentication(options =>
+            var tokenValidationParameters = new TokenValidationParameters
             {
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }
-            )
-                .AddJwtBearer(cfg =>
-                {
-                    cfg.RequireHttpsMetadata = false;
-                    cfg.SaveToken = true;
-                    cfg.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey))
-                    };
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                RequireExpirationTime = true,
+                ValidateLifetime = false
+            };
+
+            services.AddSingleton(tokenValidationParameters);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.SaveToken = true;
+                x.TokenValidationParameters = tokenValidationParameters;
+
+                x.RequireHttpsMetadata = false;
+            });
 
 
-                });
+
             return services;
         }
+
     }
 }

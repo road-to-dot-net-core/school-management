@@ -15,7 +15,6 @@ namespace School.Api.Filters
         private readonly string _actionName;
         private readonly HttpContextHelper _httpHelper;
         private readonly IUserService _userService;
-      //  private readonly IJwtHandler _jwtHandler;
 
         public AuthorizeAccessFilter(HttpContextHelper httpHelper, IUserService userService,
             string actionName
@@ -24,19 +23,21 @@ namespace School.Api.Filters
             _actionName = actionName;
             _httpHelper = httpHelper;
             _userService = userService;
-          //  _jwtHandler = jwtHandler;
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             Guid userId = _httpHelper.GetUserId();
-
-            bool isAuthorized = _userService.DoesUseHaveAccessTo(userId, _actionName);
-
-            if (!isAuthorized)
+            if (userId != Guid.Empty)
             {
-                context.Result = new UnauthorizedResult();
+                bool isAuthorized = _userService.DoesUseHaveAccessTo(userId, _actionName);
+
+                if (!isAuthorized)
+                {
+                    context.Result = new UnauthorizedResult();
+                }
             }
+            context.Result = new UnauthorizedResult();
         }
 
 

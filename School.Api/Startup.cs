@@ -11,6 +11,10 @@ using School.Domain.Repositories.Access_Control;
 using School.Infra.Repositories.Access_Control;
 using Schools.Domain.Repositories.Access_Control;
 using School.Api.Filters;
+using School.Common.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace School.Api
 {
@@ -27,13 +31,12 @@ namespace School.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSchoolDbContext(Configuration)
-                    .AddSchoolSwagger()
+                    .AddSwaggerAdv()
                     .AddHttpContextHelper()
-                    .AddAuth(Configuration);
+                    .AddJwtToken(Configuration);
+                    //.AddAuth(Configuration);
+                    
                  
-
-
-           
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
@@ -43,29 +46,6 @@ namespace School.Api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IRoleService, RoleService>();
-
-            services.AddAuthFilters();
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.SaveToken = true;
-            //        options.RequireHttpsMetadata = false;
-            //        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-            //        {
-            //            ValidateIssuer = false,
-            //            ValidateAudience = false,
-
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretKey)),
-            //            ValidateLifetime = true,
-
-            //        };
-            //    });
 
 
             services.AddControllers().AddFluentValidation();
@@ -88,13 +68,16 @@ namespace School.Api
                 option.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
             });
             app.UseAuthentication();
+            
             app.UseRouting();
-             app.UseAuthorization();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
         }
+
+
     }
 }

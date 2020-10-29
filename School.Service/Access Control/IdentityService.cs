@@ -5,6 +5,7 @@ using School.Contract.Requests.Access_Control.Identity;
 using School.Contract.Response.Access_Control.Identity;
 using School.Domain.Repositories.Access_Control;
 using Schools.Domain.Models;
+using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,13 @@ namespace School.Service.Access_Control
     public class IdentityService : IIdentityService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IJwtHandler _jwtHandler;
+        private readonly IJwtHandler _tokenFactory;
         private readonly IEncrypter _encrypter;
 
-        public IdentityService(IUserRepository userRepository, IJwtHandler jwtHandler, IEncrypter encrypter)
+        public IdentityService(IUserRepository userRepository, IJwtHandler tokenFactory, IEncrypter encrypter)
         {
             _userRepository = userRepository;
-            _jwtHandler = jwtHandler;
+             _tokenFactory = tokenFactory;
             _encrypter = encrypter;
         }
         public bool ChangePassword(ChangePasswordRequest req)
@@ -29,7 +30,7 @@ namespace School.Service.Access_Control
             throw new NotImplementedException();
         }
 
-        public JsonWebTokenResponse IssueJwtToken(string id = "", string email = "")
+        public JwtToken IssueJwtToken(string id = "", string email = "")
         {
             var user = new User();
             if (id == String.Empty)
@@ -37,11 +38,9 @@ namespace School.Service.Access_Control
             else
                 user = _userRepository.FindByKey(Guid.Parse(id));
 
-            JwtToken token = _jwtHandler.Create(user.Id);
+            JwtToken token = _tokenFactory.Create(user.Id);
 
-
-            JsonWebTokenResponse tokenResp = new JsonWebTokenResponse { Token = token.Token, Expires = token.Expires };
-            return tokenResp;
+            return token;
         }
 
         public bool Authenticate(LoginRequest req)
@@ -63,9 +62,8 @@ namespace School.Service.Access_Control
             throw new NotImplementedException();
         }
 
-        public JsonWebTokenResponse RefreshToken(RefreshTokenRequest req)
-        {
-            throw new NotImplementedException();
-        }
+
+
+
     }
 }

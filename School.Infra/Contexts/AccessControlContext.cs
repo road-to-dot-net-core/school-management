@@ -26,6 +26,7 @@ namespace School.Infra
 
             modelBuilder.ApplyConfiguration(new RolePermissionMap());
             modelBuilder.ApplyConfiguration(new SystemUserMap());
+            modelBuilder.ApplyConfiguration(new RefreshTokenMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -34,6 +35,7 @@ namespace School.Infra
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
     }
