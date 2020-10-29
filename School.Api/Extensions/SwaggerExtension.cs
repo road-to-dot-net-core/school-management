@@ -13,14 +13,6 @@ namespace School.Api.Extensions
     {
         public static IServiceCollection AddSchoolSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "School API", Version = "v1" });
-            });
-            return services;
-        }
-        public static IServiceCollection AddSwaggerAdv(this IServiceCollection services)
-        {
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "School API", Version = "v1" });

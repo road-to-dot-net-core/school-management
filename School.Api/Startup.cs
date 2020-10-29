@@ -31,10 +31,9 @@ namespace School.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSchoolDbContext(Configuration)
-                    .AddSwaggerAdv()
+                    .AddSchoolSwagger()
                     .AddHttpContextHelper()
                     .AddJwtToken(Configuration);
-                    //.AddAuth(Configuration);
                     
                  
 
