@@ -1,25 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using School.Infra;
-using School.Domain.Repositories;
-using School.Infra.Repositories;
-using School.Service;
-using FluentValidation;
-using School.Api.Requests;
-using School.Api.Validations;
 using FluentValidation.AspNetCore;
 using School.Api.Options;
+using School.Api.Extensions;
+using School.Service.Access_Control;
+using School.Domain.Repositories.Access_Control;
+using School.Infra.Repositories.Access_Control;
+using Schools.Domain.Repositories.Access_Control;
+using School.Api.Filters;
+using School.Common.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace School.Api
 {
@@ -35,20 +30,22 @@ namespace School.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<SchoolContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("SchoolConnectionString"))
-                .UseLazyLoadingProxies();
+            services.AddSchoolDbContext(Configuration)
+                    .AddSchoolSwagger()
+                    .AddHttpContextHelper()
+                    .AddJwtToken(Configuration);
+                    
+                 
 
-            });
-           // services.AddFluentValidation();
-            services.AddSingleton<IValidator<AddLevelClassRequest>, AddLevelClassReqValidator>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IFeatureRepository, FeatureRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
 
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IRoleService, RoleService>();
 
-            services.AddScoped<ILevelClassRepository, LevelClassRepository>();
-            services.AddScoped<ILevelClassService, LevelClassService>();
-
-            services.AddSwaggerGen();
 
             services.AddControllers().AddFluentValidation();
 
@@ -61,30 +58,25 @@ namespace School.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
-
-            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+            app.UseSwagger();
 
             app.UseSwaggerUI(option =>
             {
                 option.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
             });
-
-
-            app.UseStaticFiles();
-
-            app.UseHttpsRedirection();
-
+            app.UseAuthentication();
+            
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
+
+
     }
 }

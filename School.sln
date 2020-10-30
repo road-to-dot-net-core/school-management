@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Service", "School.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schools.Domain", "Schools.Domain\Schools.Domain.csproj", "{D1A9DA53-1797-47C1-BFF7-2ADE7AAEE124}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Contract", "School.Contract\School.Contract.csproj", "{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D1A9DA53-1797-47C1-BFF7-2ADE7AAEE124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1A9DA53-1797-47C1-BFF7-2ADE7AAEE124}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1A9DA53-1797-47C1-BFF7-2ADE7AAEE124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

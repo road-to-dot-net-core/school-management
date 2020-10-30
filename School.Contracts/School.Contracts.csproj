@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Requests\Levels\" />
+    <Folder Include="Requests\Students\" />
+    <Folder Include="Responses\" />
+  </ItemGroup>
+
+</Project>
