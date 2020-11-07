@@ -60,5 +60,21 @@ namespace Schools.Domain.Models
         {
             return PasswordHash.Equals(encrypter.GetHash(password, PasswordSalt));
         }
+
+        public void SetLastConnexion()
+        {
+            LastConnexionOn = DateTime.UtcNow;
+        }
+
+        public bool ChangePassword(string oldPassword, string newPassword, IEncrypter encrypter)
+        {
+            bool validPassword = VerifyPassword(oldPassword, encrypter);
+            if (validPassword)
+            {
+                SetPassword(newPassword, encrypter);
+            }
+            return validPassword;
+        }
+
     }
 }

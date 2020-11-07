@@ -15,6 +15,8 @@ using School.Common.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AutoMapper;
+using School.Api.Automapper;
 
 namespace School.Api
 {
@@ -33,14 +35,22 @@ namespace School.Api
             services.AddSchoolDbContext(Configuration)
                     .AddSchoolSwagger()
                     .AddHttpContextHelper()
-                    .AddJwtToken(Configuration);
-                    
-                 
+                    .AddJwtToken(Configuration)
+                    ;
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new CreateProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IFeatureRepository, FeatureRepository>();
             services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIdentityService, IdentityService>();

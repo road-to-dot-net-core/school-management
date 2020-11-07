@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using School.Api.Filters;
 using School.Common.Contracts.Identity;
 using School.Service.Access_Control;
+using Schools.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,7 +28,7 @@ namespace School.Api.Controllers.V1
         }
 
         [HttpGet("")]
-        [AuthorizeAccess("test")]
+        [AuthorizeAccess("GetAllRoles")]      
         public IActionResult Get()
         {
             return Ok(_roleService.GetAll());

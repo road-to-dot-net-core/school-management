@@ -13,5 +13,6 @@ namespace School.Common.Auth
         public DateTime ExpiryDate { get; set; }
         public string JwtId { get; set; }
         public Guid UserId { get; set; }
+        public string RefreshToken { get; set; }
     }
 }

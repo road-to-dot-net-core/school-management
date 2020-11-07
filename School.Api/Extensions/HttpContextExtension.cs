@@ -11,7 +11,7 @@ namespace School.Api.Extensions
     {
         public static IServiceCollection AddHttpContextHelper(this IServiceCollection services)
         {
-            services.AddScoped<HttpContextHelper, HttpContextHelper>();
+            services.AddSingleton<HttpContextHelper, HttpContextHelper>();
             services.AddHttpContextAccessor();
 
             return services;
