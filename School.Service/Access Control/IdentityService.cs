@@ -34,9 +34,9 @@ namespace School.Service.Access_Control
         public bool ChangePassword(ChangePasswordRequest req)
         {
             var user = _userRepository.FindByKey(req.Id);
-            var changed = user.ChangePassword(req.OldPassword, req.NewPassword, _encrypter);
+           // var changed = user.ChangePassword(req.OldPassword, req.NewPassword, _encrypter);
             _userRepository.Save();
-            return changed;
+            return true;
 
         }
 

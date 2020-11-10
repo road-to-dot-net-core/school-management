@@ -9,6 +9,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.CodeAnalysis.Options;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace School.Api.Extensions
 {
@@ -38,8 +40,8 @@ namespace School.Api.Extensions
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = false,
                 ValidateAudience = false,
-                RequireExpirationTime = false,
-                ValidateLifetime = true
+                RequireExpirationTime = true,
+                ValidateLifetime = false
 
             };
 
@@ -57,6 +59,18 @@ namespace School.Api.Extensions
                 x.TokenValidationParameters = tokenValidationParameters;
 
                 x.RequireHttpsMetadata = false;
+
+                x.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
 

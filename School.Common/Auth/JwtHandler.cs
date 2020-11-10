@@ -34,11 +34,9 @@ namespace School.Common.Auth
                 {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("id", userId.ToString())
-
-
                 }),
                
-               // Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
                 
                
 

@@ -18,6 +18,7 @@ namespace School.Api.Filters
             Guid userId = Guid.Empty;
             try
             {
+                
                 userId= System.Guid.Parse(_httpContextAccessor.HttpContext.User.
                     Claims.Single(x => x.Type == "id").Value);
             }

@@ -18,6 +18,7 @@ namespace School.Api.Controllers.V1
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class RolesController : Controller
     {
         private readonly IRoleService _roleService;

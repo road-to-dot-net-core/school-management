@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.Api.Filters;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 namespace School.Api.Controllers
 {
     [Route("[controller]")]
-    
+
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
@@ -33,8 +34,9 @@ namespace School.Api.Controllers
         {
             var registercommand = _mapper.Map<RegisterUserCommand>(req);
             registercommand.CreatedBy = _httpContextHelper.GetUserId();
-            bool inserted = _userService.Insert(registercommand);
-            if (inserted)
+            Result insertedResult = _userService.Insert(registercommand);
+
+            if (insertedResult.IsSuccess)
                 return Ok();
             return StatusCode(500, "Internal server error");
         }
