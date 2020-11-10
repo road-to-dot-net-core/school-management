@@ -12,8 +12,8 @@ namespace Schools.Domain.Models
         public Guid RoleId { get; private set; }
         public virtual Role Role { get; private set; }
 
-        public byte[] PasswordHash { get; private set; }
-        public byte[] PasswordSalt { get; private set; }
+        public virtual Password Password { get; private set; }
+
         public DateTime? LastConnexionOn { get; private set; }
 
 
@@ -21,7 +21,7 @@ namespace Schools.Domain.Models
         {
 
         }
-        public User(string firstName, string lastName, string password, string email, Guid roleId, Guid createdBy, IEncrypter encrypter)
+        public User(string firstName, string lastName, Password password,string email, Guid roleId, Guid createdBy)
         {
             Id = Guid.NewGuid();
             FirstName = firstName;
@@ -31,7 +31,7 @@ namespace Schools.Domain.Models
             IsActive = true;
             CreatedBy = createdBy;
             CreatedOn = DateTime.UtcNow;
-            SetPassword(password, encrypter);
+            Password = password;
         }
 
         public void EditBasicInfo(string firstName, string lastName, string address, string phone)
@@ -47,18 +47,34 @@ namespace Schools.Domain.Models
             Email = email;
         }
 
-        private void SetPassword(string password, IEncrypter encrypter)
-        {
-            byte[] passwordSalt = encrypter.GetSalt();
-            byte[] passwordHash = encrypter.GetHash(password, passwordSalt);
+        //private void SetPassword(string password, IEncrypter encrypter)
+        //{
+        //    byte[] passwordSalt = encrypter.GetSalt();
+        //    byte[] passwordHash = encrypter.GetHash(password, passwordSalt);
 
-            PasswordSalt = passwordSalt;
-            PasswordHash = passwordHash;
+        //    PasswordSalt = passwordSalt;
+        //    PasswordHash = passwordHash;
+        //}
+
+        //public bool VerifyPassword(string password, IEncrypter encrypter)
+        //{
+        //    return PasswordHash.Equals(encrypter.GetHash(password, PasswordSalt));
+        //}
+
+        public void SetLastConnexion()
+        {
+            LastConnexionOn = DateTime.UtcNow;
         }
 
-        public bool VerifyPassword(string password, IEncrypter encrypter)
-        {
-            return PasswordHash.Equals(encrypter.GetHash(password, PasswordSalt));
-        }
+        //public bool ChangePassword(string oldPassword, string newPassword, IEncrypter encrypter)
+        //{
+        //    bool validPassword = VerifyPassword(oldPassword, encrypter);
+        //    if (validPassword)
+        //    {
+        //        SetPassword(newPassword, encrypter);
+        //    }
+        //    return validPassword;
+        //}
+
     }
 }

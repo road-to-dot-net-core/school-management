@@ -12,9 +12,6 @@ namespace School.Api.Extensions
         public static IServiceCollection AddAuthFilters(this IServiceCollection services)
         {
             services.AddTransient<AuthorizeAccessAttribute,AuthorizeAccessAttribute>();
-
-
-
             return services;
         }
     }

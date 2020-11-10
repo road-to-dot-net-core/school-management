@@ -17,7 +17,7 @@ namespace School.Infra.Mapping
             builder.Property(a => a.FirstName).HasMaxLength(50).IsRequired(true);
             builder.Property(a => a.LastName).HasMaxLength(50).IsRequired(true);
             builder.Property(a => a.AddressLine).HasMaxLength(255);
-            
+
             builder.Property(a => a.Notes).HasMaxLength(500);
             builder.Property(a => a.Phone).HasMaxLength(50);
 
@@ -35,6 +35,11 @@ namespace School.Infra.Mapping
             builder.Property(aa => aa.DeletedOn).HasColumnName("DeletedOn").HasDefaultValue(null).IsRequired(false);
 
 
+            builder.OwnsOne(a => a.Password, b =>
+               {
+                   b.Property(aa => aa.PasswordHash).HasColumnName("PasswordHash");
+                   b.Property(aa => aa.PasswordSalt).HasColumnName("PasswordSalt");
+               });
 
             builder.HasOne(a => a.Role)
                    .WithMany()

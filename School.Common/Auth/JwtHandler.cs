@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace School.Common.Auth
 {
@@ -33,11 +34,11 @@ namespace School.Common.Auth
                 {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("id", userId.ToString())
-
-
                 }),
+               
                 Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.ExpiryMinutes),
-
+                
+               
 
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -51,7 +52,8 @@ namespace School.Common.Auth
                 CreatedOn = nowUtc,
                 ExpiryDate = expires,
                 UserId =userId,
-                JwtId=token.Id
+                JwtId=token.Id,
+                
             };
         }
     }

@@ -14,7 +14,9 @@ namespace School.Service.Access_Control
         public bool Authenticate(LoginRequest req);
         public void LogOut(LogOutRequest req);
         public bool ChangePassword(ChangePasswordRequest req);
-        public JwtToken IssueJwtToken(string id = "", string email = "");
+        public JwtToken IssueJwtToken(string id = "", string email = "",string refresh_token="");
+
+        public bool RefresToken(RefreshTokenRequest req, out Guid userId);
 
     }
 }

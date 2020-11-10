@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using School.Api.Filters;
 using School.Common.Auth;
 using School.Common.Contracts.Identity;
+using School.Contract.Requests.Access_Control.Identity;
 using School.Contract.Response.Access_Control.Identity;
 using School.Service.Access_Control;
 using Schools.Domain.Models.Access_Control;
@@ -47,21 +48,42 @@ namespace School.Api.Controllers.V1
         }
 
         [HttpPost("logout")]
-        public IActionResult LogOut()
+        public IActionResult LogOut(LogOutRequest req)
         {
+            _identityService.LogOut(req);
             return Ok();
         }
 
 
         [HttpPost("refresh")]
-        public IActionResult RefreshToken()
+        public IActionResult RefreshToken(RefreshTokenRequest req)
         {
-            return Ok();
+            Guid userId = Guid.Empty;
+            bool refreshed = _identityService.RefresToken(req,out userId);
+
+            if(refreshed)
+            {
+                var token = _identityService.IssueJwtToken(userId.ToString(),"",req.RefreshToken);
+
+                return Ok(token);
+            }
+            else
+            {
+                return BadRequest(new AuthFailedResponse { Errors = new[] { "Refresh Token Incorrect" } });
+            }
+
         }
 
         [HttpPost("changePassword")]
-        public IActionResult ChangePassword(LoginRequest req)
+        public IActionResult ChangePassword(ChangePasswordRequest req)
         {
+
+            bool changed = _identityService.ChangePassword(req);
+            if (!changed)
+            {
+                return BadRequest(new AuthFailedResponse { Errors = new[] { "Incorrect password " } });
+            }
+
             return Ok();
         }
 

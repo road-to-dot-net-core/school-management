@@ -8,6 +8,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.CodeAnalysis.Options;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace School.Api.Extensions
 {
@@ -17,10 +20,17 @@ namespace School.Api.Extensions
         public static IServiceCollection AddJwtToken(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtOptions = configuration.GetSection("jwt");
-            services.Configure<JwtOptions>(jwtOptions);
+            services.Configure<JwtOptions>(jwtOptions);//inject IOption<JwtOptions>
+
+
+            //var jwtObj = new JwtOptions(); -- inject JwtOptions
+            //jwtOptions.Bind(jwtObj);
+            //services.AddSingleton(jwtObj);
+
 
             var jwtOpt = jwtOptions.Get<JwtOptions>();
             var key = Encoding.ASCII.GetBytes(jwtOpt.SecretKey);
+
             services.AddSingleton<IEncrypter, Encrypter>();
             services.AddScoped<IJwtHandler, JwtHandler>();
 
@@ -32,6 +42,7 @@ namespace School.Api.Extensions
                 ValidateAudience = false,
                 RequireExpirationTime = true,
                 ValidateLifetime = false
+
             };
 
             services.AddSingleton(tokenValidationParameters);
@@ -48,6 +59,18 @@ namespace School.Api.Extensions
                 x.TokenValidationParameters = tokenValidationParameters;
 
                 x.RequireHttpsMetadata = false;
+
+                x.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
 

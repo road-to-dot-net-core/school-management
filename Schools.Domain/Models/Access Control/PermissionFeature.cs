@@ -20,7 +20,7 @@ namespace Schools.Domain.Models.Access_Control
             FeatureId = featureId;
             AssociatedOn = DateTime.Now;
         }
-        protected PermissionFeature()
+        public PermissionFeature()
         {
 
         }

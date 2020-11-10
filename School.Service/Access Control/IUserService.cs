@@ -1,4 +1,6 @@
-﻿using School.Contract.Requests.Users;
+﻿using CSharpFunctionalExtensions;
+using School.Contract.Commands.AccessControl.Users;
+using School.Contract.Requests.Users;
 using Schools.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ namespace School.Service.Access_Control
 {
     public interface IUserService
     {
-        bool Insert(RegisterUserRequest user);
+        Result Insert(RegisterUserCommand user);
         IEnumerable<User> GetAll();
         User GetById(Guid id);
         bool DoesUseHaveAccessTo(Guid userId, string actionName);

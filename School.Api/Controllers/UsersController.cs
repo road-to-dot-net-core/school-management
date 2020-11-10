@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using School.Api.Filters;
+using School.Contract.Commands.AccessControl.Users;
 using School.Contract.Requests.Users;
 using School.Service.Access_Control;
+using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +15,28 @@ using System.Threading.Tasks;
 namespace School.Api.Controllers
 {
     [Route("[controller]")]
+
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+        private readonly HttpContextHelper _httpContextHelper;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IMapper mapper, HttpContextHelper httpContextHelper)
         {
             _userService = userService;
+            _mapper = mapper;
+            _httpContextHelper = httpContextHelper;
         }
         [HttpPost]
+        [AuthorizeAccess("RegisterUser")]
         public IActionResult RegisterUser(RegisterUserRequest req)
         {
-            bool inserted = _userService.Insert(req);
-            if (inserted)
+            var registercommand = _mapper.Map<RegisterUserCommand>(req);
+            registercommand.CreatedBy = _httpContextHelper.GetUserId();
+            Result insertedResult = _userService.Insert(registercommand);
+
+            if (insertedResult.IsSuccess)
                 return Ok();
             return StatusCode(500, "Internal server error");
         }

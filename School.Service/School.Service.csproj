@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.12.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\School.Common\School.Common.csproj" />
     <ProjectReference Include="..\School.Contract\School.Contract.csproj" />
     <ProjectReference Include="..\Schools.Domain\Schools.Domain.csproj" />

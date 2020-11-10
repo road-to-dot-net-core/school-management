@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Service", "School.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schools.Domain", "Schools.Domain\Schools.Domain.csproj", "{D1A9DA53-1797-47C1-BFF7-2ADE7AAEE124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Contract", "School.Contract\School.Contract.csproj", "{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "School.Contract", "School.Contract\School.Contract.csproj", "{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "School.Extra", "School.Extra\School.Extra.csproj", "{993CE5B8-A97F-450B-880A-08713F1788C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2C1CC45-F1DD-4C8F-A284-7CA20A625DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{993CE5B8-A97F-450B-880A-08713F1788C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{993CE5B8-A97F-450B-880A-08713F1788C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{993CE5B8-A97F-450B-880A-08713F1788C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{993CE5B8-A97F-450B-880A-08713F1788C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
