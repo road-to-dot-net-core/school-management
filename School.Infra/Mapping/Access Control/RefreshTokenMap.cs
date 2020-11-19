@@ -23,7 +23,7 @@ namespace School.Infra.Mapping.Access_Control
             builder.Property(aa => aa.UpdatedBy).HasColumnName("UpdatedBy").HasDefaultValue(null).IsRequired(false);
             builder.Property(a => a.Timestamp).IsRowVersion();
 
-            builder.Property(aa => aa.Token).HasColumnName("Token").HasMaxLength(50).IsRequired();
+            builder.Property(aa => aa.Token).HasColumnName("Token").IsRequired();
             builder.Property(aa => aa.JwtId).HasColumnName("JwtId").HasMaxLength(250);
 
             builder.Ignore(aa => aa.Deleted);

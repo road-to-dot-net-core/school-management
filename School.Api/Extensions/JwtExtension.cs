@@ -31,7 +31,6 @@ namespace School.Api.Extensions
             var jwtOpt = jwtOptions.Get<JwtOptions>();
             var key = Encoding.ASCII.GetBytes(jwtOpt.SecretKey);
 
-            services.AddSingleton<IEncrypter, Encrypter>();
             services.AddScoped<IJwtHandler, JwtHandler>();
 
             var tokenValidationParameters = new TokenValidationParameters

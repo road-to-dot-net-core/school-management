@@ -29,7 +29,7 @@ namespace Schools.Domain.Models.Access_Control
             Id = Guid.NewGuid();
             Token = GenerateRefreshToken();
         }
-        public RefreshToken(JwtToken token, string refreshToken = "")
+        public RefreshToken(JwtToken token)
         {
             UserId = token.UserId;
             Token = token.Token;
@@ -38,7 +38,7 @@ namespace Schools.Domain.Models.Access_Control
             Used = false;
             Invalidated = false;
             JwtId = token.JwtId;
-                Refresh_Token = GenerateRefreshToken();
+            Refresh_Token = token.RefreshToken;
 
         }
 

@@ -19,6 +19,7 @@ namespace Schools.Domain.Models.Access_Control
         }
         public Role(string name, string description, List<Guid> permissions)
         {
+            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             CanBeDeleted = true;

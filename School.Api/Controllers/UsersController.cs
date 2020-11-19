@@ -3,6 +3,7 @@ using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.Api.Filters;
+using School.Contract;
 using School.Contract.Commands.AccessControl.Users;
 using School.Contract.Requests.Users;
 using School.Service.Access_Control;
@@ -11,10 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace School.Api.Controllers
 {
     [Route("[controller]")]
+    [EnableCors("AllowOrigin")]
 
     public class UsersController : Controller
     {
@@ -28,9 +31,13 @@ namespace School.Api.Controllers
             _mapper = mapper;
             _httpContextHelper = httpContextHelper;
         }
+
+
+
         [HttpPost]
+        //[Route(ApiRoutes.Users.Post)]
         [AuthorizeAccess("RegisterUser")]
-        public IActionResult RegisterUser(RegisterUserRequest req)
+        public IActionResult Post(RegisterUserRequest req)
         {
             var registercommand = _mapper.Map<RegisterUserCommand>(req);
             registercommand.CreatedBy = _httpContextHelper.GetUserId();
@@ -41,7 +48,9 @@ namespace School.Api.Controllers
             return StatusCode(500, "Internal server error");
         }
 
+
         [HttpGet]
+       // [Route(ApiRoutes.Users.GetAll)]
         public IActionResult Get()
         {
             var users = _userService.GetAll();
@@ -50,7 +59,11 @@ namespace School.Api.Controllers
             return StatusCode(500, "Internal server error");
 
         }
+
+
+
         [HttpGet("{id}")]
+       // [Route(ApiRoutes.Users.Get)]
         public IActionResult Get(Guid id)
         {
             var user = _userService.GetById(id);
