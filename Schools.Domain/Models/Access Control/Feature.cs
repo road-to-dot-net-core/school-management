@@ -18,6 +18,8 @@ namespace Schools.Domain.Models.Access_Control
         }
         public Feature(string label, string action, string controller, string controllerActionName, string description)
         {
+            Id = Guid.NewGuid();
+
             Label = label;
             Action = action;
             Controller = controller;

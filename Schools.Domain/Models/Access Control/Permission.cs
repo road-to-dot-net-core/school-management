@@ -19,6 +19,8 @@ namespace Schools.Domain.Models.Access_Control
         }
         public Permission(string label, string description, List<Guid> features)
         {
+            Id = Guid.NewGuid();
+
             Label = label;
             Description = description;
             UpdateFeatures(features);

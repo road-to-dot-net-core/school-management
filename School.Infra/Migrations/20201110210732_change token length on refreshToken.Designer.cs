@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School.Infra;
 
 namespace School.Infra.Migrations
 {
     [DbContext(typeof(AccessControlContext))]
-    partial class AccessControlContextModelSnapshot : ModelSnapshot
+    [Migration("20201110210732_change token length on refreshToken")]
+    partial class changetokenlengthonrefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,4 +1,5 @@
-﻿using School.Common.Auth;
+﻿using CSharpFunctionalExtensions;
+using School.Common.Auth;
 using School.Common.Contracts.Identity;
 using School.Contract.Requests.Access_Control.Identity;
 using School.Contract.Response.Access_Control.Identity;
@@ -13,10 +14,10 @@ namespace School.Service.Access_Control
     {
         public bool Authenticate(LoginRequest req);
         public void LogOut(LogOutRequest req);
-        public bool ChangePassword(ChangePasswordRequest req);
-        public JwtToken IssueJwtToken(string id = "", string email = "",string refresh_token="");
+        public Result ChangePassword(ChangePasswordRequest req);
+        public JwtToken IssueJwtToken(string id = "", string email = "");
 
-        public bool RefresToken(RefreshTokenRequest req, out Guid userId);
+        public Result RefresToken(RefreshTokenRequest req, out Guid userId);
 
     }
 }

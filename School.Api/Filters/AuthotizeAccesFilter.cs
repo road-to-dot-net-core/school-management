@@ -23,10 +23,12 @@ namespace School.Api.Filters
         private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly TokenValidationParameters _tokenValidationParameters;
+        private readonly IJwtHandler _jwtHandler;
 
         public AuthorizeAccessFilter(IUserService userService,
             IHttpContextAccessor httpContextAccessor,
             TokenValidationParameters tokenValidationParameters,
+            IJwtHandler jwtHandler,
             string actionName
                                      )
         {
@@ -34,38 +36,7 @@ namespace School.Api.Filters
             _userService = userService;
             _httpContextAccessor = httpContextAccessor;
             _tokenValidationParameters = tokenValidationParameters;
-        }
-        private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
-        {
-            return (validatedToken is JwtSecurityToken jwtSecurityToken) &&
-                   jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
-                       StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        private ClaimsPrincipal GetPrincipalFromToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            try
-            {
-                var tokenValidationParameters = _tokenValidationParameters.Clone();
-                tokenValidationParameters.ValidateLifetime = false;
-                if (tokenHandler.CanValidateToken)
-                {
-                    var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var validatedToken);
-                    if (!IsJwtWithValidSecurityAlgorithm(validatedToken))
-                    {
-                        return null;
-                    }
-
-                    return principal;
-                }
-                return null;
-            }
-            catch
-            {
-                return null;
-            }
+            _jwtHandler = jwtHandler;
         }
 
         public System.Guid GetUserId()
@@ -90,10 +61,10 @@ namespace School.Api.Filters
             if (bearerToken != null)
             {
                 bearerToken = bearerToken.Replace("Bearer", "").Trim();
-                ClaimsPrincipal validatedToken = GetPrincipalFromToken(bearerToken);
+                ClaimsPrincipal validatedToken = _jwtHandler.GetValidPrincipalClaim(bearerToken);
                 if (validatedToken != null)
                 {
-                    if (IsTokenExipred(validatedToken))
+                    if (_jwtHandler.IsTokenExpired(validatedToken))
                     {
                         context.Result =new BadRequestResult();
                         context.HttpContext.Response.Headers["Token-expired"]="true";
@@ -115,20 +86,6 @@ namespace School.Api.Filters
                     context.Result = new UnauthorizedResult();
             }
             else context.Result = new BadRequestResult();
-        }
-        private bool IsTokenExipred(ClaimsPrincipal validatedToken)
-        {
-            var expiryDateInseconds =
-               long.Parse(validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-
-            var expiryDateTimeUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            expiryDateTimeUtc = expiryDateTimeUtc.AddSeconds(expiryDateInseconds);
-
-            if (expiryDateTimeUtc < DateTime.UtcNow)
-            {
-                return true;
-            }
-            return false;
         }
 
 

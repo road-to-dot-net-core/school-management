@@ -10,13 +10,9 @@ using School.Service.Access_Control;
 using School.Domain.Repositories.Access_Control;
 using School.Infra.Repositories.Access_Control;
 using Schools.Domain.Repositories.Access_Control;
-using School.Api.Filters;
-using School.Common.Auth;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using AutoMapper;
 using School.Api.Automapper;
+using School.MockData;
 
 namespace School.Api
 {
@@ -36,6 +32,7 @@ namespace School.Api
                     .AddSchoolSwagger()
                     .AddHttpContextHelper()
                     .AddJwtToken(Configuration)
+                    .AddCorsConfig()
                     ;
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -68,6 +65,7 @@ namespace School.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+          
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
             app.UseSwagger();
@@ -79,6 +77,7 @@ namespace School.Api
             app.UseAuthentication();
             
             app.UseRouting();
+            app.UseCors("AllowOrigin");
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

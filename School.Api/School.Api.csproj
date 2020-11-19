@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\School.Contract\School.Contract.csproj" />
     <ProjectReference Include="..\School.Infra\School.Infra.csproj" />
+    <ProjectReference Include="..\School.MockData\School.MockData.csproj" />
     <ProjectReference Include="..\School.Service\School.Service.csproj" />
   </ItemGroup>
 

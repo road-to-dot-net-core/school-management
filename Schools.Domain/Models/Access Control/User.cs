@@ -66,15 +66,10 @@ namespace Schools.Domain.Models
             LastConnexionOn = DateTime.UtcNow;
         }
 
-        //public bool ChangePassword(string oldPassword, string newPassword, IEncrypter encrypter)
-        //{
-        //    bool validPassword = VerifyPassword(oldPassword, encrypter);
-        //    if (validPassword)
-        //    {
-        //        SetPassword(newPassword, encrypter);
-        //    }
-        //    return validPassword;
-        //}
+        public void ChangePassword(Password password)
+        {
+            Password = password;
+        }
 
     }
 }
