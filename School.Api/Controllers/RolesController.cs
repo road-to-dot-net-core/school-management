@@ -20,7 +20,6 @@ namespace School.Api.Controllers.V1
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
     [EnableCors("AllowOrigin")]
     public class RolesController : Controller
     {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Linq;
+using School.Contract.Response.Access_Control.Menu;
 
 namespace School.MockData
 {
@@ -128,6 +129,11 @@ namespace School.MockData
             _users.Add(new User("user name_1", "user_name 2", Password.Create("test").Value, "user@gmail.com", Guid.Parse("D624FB96-8B2C-412D-9E79-521E87B21C4F"),
             Guid.Parse("D624FB96-8B2C-412D-9E79-521E87B21C4F")));
             return _users;
+        }
+
+        public IEnumerable<MenuResponse> GetMenu(Guid userId)
+        {
+            throw new NotImplementedException();
         }
 
         public void Insert(User entity)

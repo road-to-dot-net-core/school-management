@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
@@ -66,8 +67,10 @@ namespace School.Api.Filters
                 {
                     if (_jwtHandler.IsTokenExpired(validatedToken))
                     {
-                        context.Result =new BadRequestResult();
-                        context.HttpContext.Response.Headers["Token-expired"]="true";
+                        context.Result = new BadRequestResult();
+                        context.HttpContext.Response.Headers["Token-expired"] = "true";
+                    
+                      //  context.HttpContext.Response.Body = 'TokenExpired';
                         return;
                     }
                     Guid userId = GetUserId();
@@ -83,9 +86,18 @@ namespace School.Api.Filters
                     }
                 }
                 else
+                {
+                    context.HttpContext.Response.Headers["Token-Invalid"] = "true";
                     context.Result = new UnauthorizedResult();
+                    return;
+                }
             }
-            else context.Result = new BadRequestResult();
+            else
+            {
+                context.HttpContext.Response.Headers["Token-absent"] = "true";
+                context.Result = new BadRequestResult();
+                return;
+            }
         }
 
 

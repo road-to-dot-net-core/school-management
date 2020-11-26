@@ -35,6 +35,16 @@ namespace School.Infra.Mapping.School_Management
             builder.Property(aa => aa.DeletedBy).HasColumnName("DeletedBy").HasDefaultValue(null).IsRequired(false);
             builder.Property(aa => aa.DeletedOn).HasColumnName("DeletedOn").HasDefaultValue(null).IsRequired(false);
 
+            builder.Property(a => a.RoutingLink).HasMaxLength(50).IsRequired(false);
+            builder.Property(a => a.Logo).HasMaxLength(50).IsRequired(false);
+
+            //reflexiv relationship
+            builder.HasOne(a => a.ParentFeature)
+                .WithMany()
+                .HasForeignKey(a => a.ParentId)
+                  .OnDelete(DeleteBehavior.NoAction);
+
+
         }
     }
 }

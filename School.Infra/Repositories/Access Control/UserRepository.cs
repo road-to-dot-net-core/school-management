@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Linq;
 using School.Domain.Repositories.Access_Control;
+using School.Contract.Response.Access_Control.Menu;
 
 namespace School.Infra.Repositories.Access_Control
 {
@@ -53,7 +54,28 @@ namespace School.Infra.Repositories.Access_Control
         public IEnumerable<User> GetAll()
         {
             var users = _context.Users.ToList();
-            return users;                                        
+            return users;
+        }
+
+        public IEnumerable<MenuResponse> GetMenu(Guid userId)
+        {
+            var menuItems = from x in _context.Users
+                            from y in _context.Roles
+                            from yy in y.RolePermissions
+                            from z in _context.Permissions
+                            from zz in z.PermissionFeatures
+                            from t in _context.Features
+
+                            where x.Id == userId && t.ParentId == null
+
+                            select new MenuResponse
+                            {
+                                Label = t.Label,
+                                Logo = t.Logo,
+                                RoutingLink = t.RoutingLink
+                            };
+
+            return menuItems;
         }
 
         public void Insert(User entity)

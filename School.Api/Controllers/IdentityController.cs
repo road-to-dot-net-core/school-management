@@ -64,7 +64,7 @@ namespace School.Api.Controllers.V1
                 return Ok(new
                 {
                     RefreshToken = token.RefreshToken,
-                    Token = "Bearer " + token.Token
+                    Token =  token.Token
                 });
             }
             else

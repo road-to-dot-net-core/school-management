@@ -1,4 +1,5 @@
-﻿using Schools.Domain.Models;
+﻿using School.Contract.Response.Access_Control.Menu;
+using Schools.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -15,5 +16,7 @@ namespace School.Domain.Repositories.Access_Control
 
         bool Save();
         bool DoesUserHaveAccessTo(Guid userId, string actionName);
+
+        IEnumerable<MenuResponse> GetMenu(Guid userId);
     }
 }
