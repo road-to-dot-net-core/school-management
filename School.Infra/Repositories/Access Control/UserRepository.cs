@@ -57,25 +57,69 @@ namespace School.Infra.Repositories.Access_Control
             return users;
         }
 
-        public IEnumerable<MenuResponse> GetMenu(Guid userId)
+        public UserMenuResponse GetMenu(Guid userId)
         {
-            var menuItems = from x in _context.Users
-                            from y in _context.Roles
-                            from yy in y.RolePermissions
-                            from z in _context.Permissions
-                            from zz in z.PermissionFeatures
-                            from t in _context.Features
+            var user = _context.Users.Find(userId);
+            //var menuItems = (from x in _context.Users
+            //                 from y in _context.Roles
+            //                 from yy in y.RolePermissions
+            //                 from z in _context.Permissions
+            //                 from zz in z.PermissionFeatures
+            //                 from t in _context.Features
 
-                            where x.Id == userId && t.ParentId == null
+            //                 where t.RoutingLink != null
 
-                            select new MenuResponse
-                            {
-                                Label = t.Label,
-                                Logo = t.Logo,
-                                RoutingLink = t.RoutingLink
-                            };
+            //                 select new
+            //                 {
+            //                     //Id=t.Id,
+            //                     UserId = x.Id,
+            //                     FirstName = x.FirstName,
+            //                     LastName = x.LastName,
+            //                     Email = x.Email,
+            //                     Title = t.Label,
+            //                     Icon = t.Logo,
+            //                     RoutingLink = t.RoutingLink,
+            //                     //ParentId=t.ParentId
+            //                 }).ToList();
+            var menuItems = (from t in _context.Features
 
-            return menuItems;
+                             where t.RoutingLink != null
+
+                             select new
+                             {
+                                 //Id=t.Id,
+                                 //UserId = x.Id,
+                                 //FirstName = x.FirstName,
+                                 //LastName = x.LastName,
+                                 //Email = x.Email,
+                                 Title = t.Label,
+                                 Icon = t.Logo,
+                                 RoutingLink = t.RoutingLink,
+                                 //ParentId=t.ParentId
+                             }).ToList();
+            if (menuItems != null)
+                return new UserMenuResponse
+                {
+                    //Id = menuItems.FirstOrDefault().UserId,
+                    //FirstName = menuItems.FirstOrDefault().FirstName,
+                    //LastName = menuItems.FirstOrDefault().LastName,
+                    //Email = menuItems.FirstOrDefault().LastName,
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Items = menuItems.Select(a =>
+                    new MenuResponseItem
+                    {
+                        Title = a.Title,
+                        Icon = a.Icon,
+                        RoutingLink = a.RoutingLink
+                    }).ToList()
+
+                };
+            else
+                return null;
+
         }
 
         public void Insert(User entity)

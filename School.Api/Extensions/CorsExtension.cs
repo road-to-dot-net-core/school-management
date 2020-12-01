@@ -18,7 +18,7 @@ namespace School.Api.Extensions
                     builder.AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowCredentials();
+                    /*.AllowCredentials()*/;
 
                 });
             });

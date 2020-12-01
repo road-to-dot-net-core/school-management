@@ -131,7 +131,7 @@ namespace School.MockData
             return _users;
         }
 
-        public IEnumerable<MenuResponse> GetMenu(Guid userId)
+        public IEnumerable<MenuResponseItem> GetMenu(Guid userId)
         {
             throw new NotImplementedException();
         }
@@ -142,6 +142,11 @@ namespace School.MockData
         }
 
         public bool Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        UserMenuResponse IUserRepository.GetMenu(Guid userId)
         {
             throw new NotImplementedException();
         }

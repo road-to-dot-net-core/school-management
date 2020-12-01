@@ -2,6 +2,7 @@
 using School.Common.Auth;
 using School.Contract.Commands.AccessControl.Users;
 using School.Contract.Requests.Users;
+using School.Contract.Response.Access_Control.Menu;
 using School.Domain.Repositories.Access_Control;
 using Schools.Domain.Models;
 using Schools.Domain.Models.Access_Control;
@@ -33,6 +34,11 @@ namespace School.Service.Access_Control
         public User GetById(Guid id)
         {
             return _userRepository.FindByKey(id);
+        }
+
+        public UserMenuResponse GetMenu(Guid userId)
+        {
+            return _userRepository.GetMenu(userId);
         }
 
         public Result Insert(RegisterUserCommand command)

@@ -17,6 +17,6 @@ namespace School.Domain.Repositories.Access_Control
         bool Save();
         bool DoesUserHaveAccessTo(Guid userId, string actionName);
 
-        IEnumerable<MenuResponse> GetMenu(Guid userId);
+        UserMenuResponse GetMenu(Guid userId);
     }
 }
