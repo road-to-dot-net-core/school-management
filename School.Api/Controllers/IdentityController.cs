@@ -40,7 +40,7 @@ namespace School.Api.Controllers.V1
                         InnerErrorMessages = new List<string>() { "Login name must be greater than 10 caracters" }
                     });
 
-                if (!result.IsOk)
+                if (!result.OK)
                     return BadRequest(result.Failure());
 
                 var token = _identityService.IssueJwtToken("", req.Login);

@@ -12,13 +12,13 @@ namespace School.Contract.ApiResults
         private IBusinessOperation _businessOperation;
         public object Result { get; set; }
         public List<IFailureResponse> Errors { get; internal set; }
-        public string ErrorTitle { get; internal set; }
-        public bool IsOk => !Errors.Any();
+        public string Title { get; internal set; }
+        public bool OK => !Errors.Any();
 
         private ApiResult()
         {
             _businessOperation = GetBusinessOperation();
-            ErrorTitle = _businessOperation.OperationFailureMessage;
+            Title = _businessOperation.OperationFailureMessage;
             Errors = new List<IFailureResponse>();
         }
         private ApiResult(List<IFailureResponse> failureResponses) : this()
@@ -43,7 +43,7 @@ namespace School.Contract.ApiResults
         {
             Result = responseData;
             Errors.Clear();
-            ErrorTitle = string.Empty;
+            Title = string.Empty;
            
             return this;
         }
@@ -51,7 +51,7 @@ namespace School.Contract.ApiResults
         public ApiResult<T> Failure()
         {
             Result = null;
-            ErrorTitle = _businessOperation.OperationFailureMessage;
+            Title = _businessOperation.OperationFailureMessage;
             return this;
         }
 
