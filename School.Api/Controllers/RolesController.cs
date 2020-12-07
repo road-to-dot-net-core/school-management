@@ -1,20 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using School.Api.Filters;
-using School.Common.Contracts.Identity;
-using School.Contract;
 using School.Service.Access_Control;
-using Schools.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
+using School.Contract.ApiResults;
+using School.Contract.ApiResults.BusinessOperations.Roles;
+using School.Contract.Response.Access_Control.Roles;
 
 namespace School.Api.Controllers.V1
 {
@@ -35,7 +25,12 @@ namespace School.Api.Controllers.V1
         [AuthorizeAccess("GetAllRoles")]
         public IActionResult Get()
         {
-            return Ok(_roleService.GetAll());
+            var result = ApiResult<RequestingRolesOperation>.CreateResult();
+            var roles = _roleService.GetAll();
+            var apiResult = result.Success(new AllRoleResponse { Roles=roles});
+
+            return Ok(apiResult);
+
         }
 
 

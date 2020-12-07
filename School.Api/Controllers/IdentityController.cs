@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using School.Common.Contracts.Identity;
 using School.Contract;
+using School.Contract.ApiResults;
+using School.Contract.ApiResults.BusinessOperations;
 using School.Contract.Requests.Access_Control.Identity;
 using School.Service.Access_Control;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace School.Api.Controllers.V1
 {
@@ -24,21 +28,35 @@ namespace School.Api.Controllers.V1
         }
 
         [HttpPost("login")]
-        public IActionResult LogIn(LoginRequest req)
+        public ActionResult<ApiResult<AuthenticationOperation>> LogIn(LoginRequest req)
         {
-            bool authenticated = _identityService.Authenticate(req);
-            if (!authenticated)
+            var result = ApiResult<AuthenticationOperation>.CreateResult();
+            try
             {
-                return BadRequest(new AuthFailedResponse { Errors = new[] { "Email Et/Ou password incorrect" } });
+                bool authenticated = _identityService.Authenticate(req);
+                if (!authenticated)
+                    result.AppendErrorResponse(new AuthFailedResponse()
+                    {
+                        InnerErrorMessages = new List<string>() { "Login name must be greater than 10 caracters" }
+                    });
+
+                if (!result.OK)
+                    return BadRequest(result.Failure());
+
+                var token = _identityService.IssueJwtToken("", req.Login);
+                var apiResult = result.Success(new AuthSuccessResponse()
+                {
+                    RefreshToken = token.RefreshToken,
+                    Token = token.Token
+                });
+
+                return Ok(apiResult);
             }
-            var token = _identityService.IssueJwtToken("", req.Login);
-
-            return Ok(new UserLoginResponse
+            catch (Exception ex)
             {
-                RefreshToken = token.RefreshToken,
-                Token =  token.Token
-            });
-
+                result.AppendErrorResponse(new TechnicalFailureResponse(ex));
+                return StatusCode(500, result.Failure());
+            }
         }
 
         [HttpPost("logout")]
@@ -64,12 +82,12 @@ namespace School.Api.Controllers.V1
                 return Ok(new
                 {
                     RefreshToken = token.RefreshToken,
-                    Token =  token.Token
+                    Token = token.Token
                 });
             }
             else
             {
-                return BadRequest(new AuthFailedResponse { Errors = new[] { "Refresh Token Incorrect" } });
+                return BadRequest(new AuthFailedResponse() { InnerErrorMessages = new List<string>() { "Refresh Token Incorrect" } });
             }
 
         }
@@ -82,7 +100,7 @@ namespace School.Api.Controllers.V1
             Result result = _identityService.ChangePassword(req);
             if (!result.IsSuccess)
             {
-                return BadRequest(new AuthFailedResponse { Errors = new[] { "Incorrect password " } });
+                return BadRequest(new AuthFailedResponse { InnerErrorMessages = new List<string>() { "Incorrect password " } });
             }
 
             return Ok();

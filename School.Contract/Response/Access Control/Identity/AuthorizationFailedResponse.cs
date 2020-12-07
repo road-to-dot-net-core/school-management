@@ -5,9 +5,9 @@ using System.Text;
 
 namespace School.Common.Contracts.Identity
 {
-    public class AuthFailedResponse : IFailureResponse
+    public class AuthorizationFailedResponse : IFailureResponse
     {
-        public string ErrorCode => "INVALID_CREDENTIALS";
+        public string ErrorCode => "UNAUTHORIZED";
 
         public string ErrorMessage => string.Empty;
 

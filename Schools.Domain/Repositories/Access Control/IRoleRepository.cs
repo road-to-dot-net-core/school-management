@@ -1,4 +1,5 @@
-﻿using Schools.Domain.Models.Access_Control;
+﻿using School.Contract.Response.Access_Control.Roles;
+using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -9,7 +10,7 @@ namespace Schools.Domain.Repositories.Access_Control
     public interface IRoleRepository
     {
         Role FindByKey(Guid id);
-        IEnumerable<Role> GetAll();
+        IEnumerable<RoleResponse> GetAll();
         void Insert(Role entity);
         IEnumerable<Role> FindBy(Expression<Func<Role, bool>> predicate);
 

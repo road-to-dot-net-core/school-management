@@ -1,4 +1,5 @@
-﻿using System;
+﻿using School.Contract.ApiResults;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,7 +15,7 @@ namespace School.Contract.Response.Access_Control.Menu
 
 
     }
-    public class UserMenuResponse
+    public class UserMenuResponse: ISuccessResponse
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

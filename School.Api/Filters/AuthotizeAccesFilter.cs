@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 using School.Common.Auth;
+using School.Common.Contracts.Identity;
+using School.Contract.ApiResults;
+using School.Contract.ApiResults.BusinessOperations;
 using School.Service.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -67,10 +71,12 @@ namespace School.Api.Filters
                 {
                     if (_jwtHandler.IsTokenExpired(validatedToken))
                     {
-                        context.Result = new BadRequestResult();
-                        context.HttpContext.Response.Headers["Token-expired"] = "true";
-                    
-                      //  context.HttpContext.Response.Body = 'TokenExpired';
+                        var result = ApiResult<AuthorizationOperation>.CreateResult();
+                        result.AppendErrorResponse(new AuthorizationFailedResponse()
+                        {
+                            InnerErrorMessages = new List<string>() { "Token_expired" },
+                        });
+                        context.Result = new UnauthorizedObjectResult(result);
                         return;
                     }
                     Guid userId = GetUserId();
@@ -87,15 +93,25 @@ namespace School.Api.Filters
                 }
                 else
                 {
-                    context.HttpContext.Response.Headers["Token-Invalid"] = "true";
-                    context.Result = new UnauthorizedResult();
+                    var result = ApiResult<AuthorizationOperation>.CreateResult();
+                    result.AppendErrorResponse(new AuthorizationFailedResponse()
+                    {
+                        InnerErrorMessages = new List<string>() { "Token_invalid" },
+                    });
+                    context.Result = new UnauthorizedObjectResult(result);
+
                     return;
                 }
             }
             else
             {
-                context.HttpContext.Response.Headers["Token-absent"] = "true";
-                context.Result = new BadRequestResult();
+                var result = ApiResult<AuthorizationOperation>.CreateResult();
+                result.AppendErrorResponse(new AuthorizationFailedResponse()
+                {
+                    InnerErrorMessages = new List<string>() { "Token_absent" },
+                });
+                context.Result = new UnauthorizedObjectResult(result);
+
                 return;
             }
         }
