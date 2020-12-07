@@ -7,6 +7,9 @@ using School.Contract.Requests.Users;
 using School.Service.Access_Control;
 using System;
 using Microsoft.AspNetCore.Cors;
+using School.Contract.ApiResults;
+using School.Contract.Response.Access_Control.Menu;
+using School.Contract.ApiResults.BusinessOperations.Menu;
 
 namespace School.Api.Controllers
 {
@@ -75,9 +78,12 @@ namespace School.Api.Controllers
             Guid userId = _httpContextHelper.GetUserId();
             var userMenu = _userService.GetMenu(userId);
             if (userMenu != null)
-                return Ok(userMenu);
+            {
+                var result = ApiResult<NavigationMenuOperation>.CreateResult();
+                var apiResult = result.Success(userMenu);
+                return Ok(apiResult);
 
-
+            }
             return StatusCode(500, "Internal server error");
 
         }

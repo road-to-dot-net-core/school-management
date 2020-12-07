@@ -1,4 +1,5 @@
-﻿using Schools.Domain.Models.Access_Control;
+﻿using School.Contract.Response.Access_Control.Roles;
+using Schools.Domain.Models.Access_Control;
 using Schools.Domain.Repositories.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace School.Service.Access_Control
         {
             _roleRepository = roleRepository;
         }
-        public IEnumerable<Role> GetAll()
+        public IEnumerable<RoleResponse> GetAll()
         {
             return _roleRepository.GetAll();
         }

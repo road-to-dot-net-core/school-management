@@ -1,9 +1,11 @@
-﻿using Schools.Domain.Models.Access_Control;
+﻿using School.Contract.Response.Access_Control.Roles;
+using Schools.Domain.Models.Access_Control;
 using Schools.Domain.Repositories.Access_Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace School.Infra.Repositories.Access_Control
@@ -34,9 +36,16 @@ namespace School.Infra.Repositories.Access_Control
         }
 
 
-        public IEnumerable<Role> GetAll()
+        public IEnumerable<RoleResponse> GetAll()
         {
-            var roles = _context.Roles.ToList();
+            //  var roles = _context.Roles.ToList();
+            var roles = (from x in _context.Roles
+                         select new RoleResponse
+                         {
+                             Id=x.Id,
+                             Name=x.Name,
+                             Description=x.Description
+                         }).ToList();
             return roles;
         }
 
