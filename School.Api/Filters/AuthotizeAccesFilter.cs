@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 using School.Common.Auth;
 using School.Common.Contracts.Identity;
-using School.Contract.ApiResults;
-using School.Contract.ApiResults.BusinessOperations;
+using School.Contract.Results;
 using School.Service.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -29,19 +28,21 @@ namespace School.Api.Filters
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly IJwtHandler _jwtHandler;
+        private readonly IApiResult _apiResult;
 
         public AuthorizeAccessFilter(IUserService userService,
             IHttpContextAccessor httpContextAccessor,
             TokenValidationParameters tokenValidationParameters,
             IJwtHandler jwtHandler,
-            string actionName
-                                     )
+            string actionName,
+            IApiResult apiResult)
         {
             _actionName = actionName;
             _userService = userService;
             _httpContextAccessor = httpContextAccessor;
             _tokenValidationParameters = tokenValidationParameters;
             _jwtHandler = jwtHandler;
+            _apiResult = apiResult;
         }
 
         public System.Guid GetUserId()
@@ -71,11 +72,11 @@ namespace School.Api.Filters
                 {
                     if (_jwtHandler.IsTokenExpired(validatedToken))
                     {
-                        var result = ApiResult<AuthorizationOperation>.CreateResult();
-                        result.AppendErrorResponse(new AuthorizationFailedResponse()
+                        var result = _apiResult.CreateFailureResult(new AuthorizationFailedResponse()
                         {
                             InnerErrorMessages = new List<string>() { "Token_expired" },
                         });
+
                         context.Result = new UnauthorizedObjectResult(result);
                         return;
                     }
@@ -93,11 +94,11 @@ namespace School.Api.Filters
                 }
                 else
                 {
-                    var result = ApiResult<AuthorizationOperation>.CreateResult();
-                    result.AppendErrorResponse(new AuthorizationFailedResponse()
-                    {
-                        InnerErrorMessages = new List<string>() { "Token_invalid" },
-                    });
+                    var result = _apiResult.CreateFailureResult(
+                        new AuthorizationFailedResponse()
+                        {
+                            InnerErrorMessages = new List<string>() { "Token_invalid" },
+                        });
                     context.Result = new UnauthorizedObjectResult(result);
 
                     return;
@@ -105,8 +106,7 @@ namespace School.Api.Filters
             }
             else
             {
-                var result = ApiResult<AuthorizationOperation>.CreateResult();
-                result.AppendErrorResponse(new AuthorizationFailedResponse()
+                var result = _apiResult.CreateFailureResult(new AuthorizationFailedResponse()
                 {
                     InnerErrorMessages = new List<string>() { "Token_absent" },
                 });

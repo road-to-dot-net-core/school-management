@@ -1,11 +1,11 @@
-﻿using School.Contract.ApiResults;
+﻿using School.Contract.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace School.Contract.Response.Access_Control.Menu
 {
-    public class MenuResponseItem
+    public class MenuResponseItem : ISuccessResponse
     {
         //public Guid Id { get; set; }
         public string Title { get; set; }
@@ -15,7 +15,7 @@ namespace School.Contract.Response.Access_Control.Menu
 
 
     }
-    public class UserMenuResponse: ISuccessResponse
+    public class UserMenuResponse : ISuccessResponse
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
