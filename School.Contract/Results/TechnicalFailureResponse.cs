@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 
-namespace School.Contract.ApiResults
+namespace School.Contract.Results
 {
     public class TechnicalFailureResponse : IFailureResponse
     {
@@ -11,9 +10,12 @@ namespace School.Contract.ApiResults
         public string ErrorMessage { get; }
         public List<string> InnerErrorMessages { get; set; }
 
-        public TechnicalFailureResponse(Exception exception)
+        public TechnicalFailureResponse(string errorMessage)
         {
-            ErrorMessage = exception.Message;
+            ErrorMessage = errorMessage;
+        }
+        public TechnicalFailureResponse(Exception exception) : this(exception.Message)
+        {
             if (exception.InnerException != null)
                 InnerErrorMessages.Add(exception.InnerException.Message);
         }

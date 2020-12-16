@@ -1,4 +1,4 @@
-﻿using School.Contract.ApiResults;
+﻿using School.Contract.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +9,7 @@ namespace School.Common.Contracts.Identity
     {
         public string ErrorCode => "INVALID_CREDENTIALS";
 
-        public string ErrorMessage => string.Empty;
+        public string ErrorMessage => "Authentification failed";
 
         public List<string> InnerErrorMessages { get; set; }
     }

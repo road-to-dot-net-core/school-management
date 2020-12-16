@@ -2,38 +2,42 @@
 using School.Api.Filters;
 using School.Service.Access_Control;
 using Microsoft.AspNetCore.Cors;
-using School.Contract.ApiResults;
-using School.Contract.ApiResults.BusinessOperations.Roles;
 using School.Contract.Response.Access_Control.Roles;
+using School.Contract.Results;
+using School.Contract.Results.MetaResult;
+using System;
 
 namespace School.Api.Controllers.V1
 {
     [Route("[controller]")]
     [ApiController]
     [EnableCors("AllowOrigin")]
-    public class RolesController : Controller
+    public class RolesController : BaseController
     {
         private readonly IRoleService _roleService;
-
-        public RolesController(IRoleService roleService)
+        private readonly IApiResult _apiResult;
+        public RolesController(IRoleService roleService, IApiResult apiResult) : base(apiResult)
         {
             _roleService = roleService;
+            _apiResult = apiResult;
         }
 
         [HttpGet]
-        //  [Route(ApiRoutes.Roles.GetAll)]
-        [AuthorizeAccess("GetAllRoles")]
+        // [Route(ApiRoutes.Roles.GetAll)]
+        //[AuthorizeAccess("GetAllRoles")]
         public IActionResult Get()
         {
-            var result = ApiResult<RequestingRolesOperation>.CreateResult();
-            var roles = _roleService.GetAll();
-            var apiResult = result.Success(new AllRoleResponse { Roles=roles});
-
-            return Ok(apiResult);
-
+            try
+            {
+                return Ok(
+                    _apiResult.CreateSuccessResult(
+                        new AllRoleResponse(_roleService.GetAll()), new ResponseMetadata(1000, 10, 51, 23)));
+            }
+            catch(Exception ex)
+            {
+                return InternalServerError();
+            }
+          
         }
-
-
-
     }
 }

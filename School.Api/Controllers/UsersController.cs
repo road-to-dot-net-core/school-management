@@ -7,29 +7,29 @@ using School.Contract.Requests.Users;
 using School.Service.Access_Control;
 using System;
 using Microsoft.AspNetCore.Cors;
-using School.Contract.ApiResults;
 using School.Contract.Response.Access_Control.Menu;
-using School.Contract.ApiResults.BusinessOperations.Menu;
+using School.Contract.Results;
 
 namespace School.Api.Controllers
 {
     [Route("[controller]")]
     [EnableCors("AllowOrigin")]
     [AuthorizeAccess("Users")]
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly HttpContextHelper _httpContextHelper;
+        private readonly IApiResult _apiResult;
 
-        public UsersController(IUserService userService, IMapper mapper, HttpContextHelper httpContextHelper)
+        public UsersController(IUserService userService, IMapper mapper, HttpContextHelper httpContextHelper, IApiResult apiResult)
+            : base(apiResult)
         {
             _userService = userService;
             _mapper = mapper;
             _httpContextHelper = httpContextHelper;
+            _apiResult = apiResult;
         }
-
-
 
         [HttpPost]
         //[Route(ApiRoutes.Users.Post)]
@@ -42,9 +42,9 @@ namespace School.Api.Controllers
 
             if (insertedResult.IsSuccess)
                 return Ok();
-            return StatusCode(500, "Internal server error");
-        }
 
+            return InternalServerError();
+        }
 
         [HttpGet]
         // [Route(ApiRoutes.Users.GetAll)]
@@ -53,11 +53,9 @@ namespace School.Api.Controllers
             var users = _userService.GetAll();
             if (users != null)
                 return Ok(users);
-            return StatusCode(500, "Internal server error");
+            return InternalServerError();
 
         }
-
-
 
         [HttpGet("{id}")]
         // [Route(ApiRoutes.Users.Get)]
@@ -69,8 +67,6 @@ namespace School.Api.Controllers
             return NotFound();
         }
 
-
-
         [HttpGet("menu")]
         // [Route(ApiRoutes.Users.GetAll)]
         public IActionResult GetMenu()
@@ -79,15 +75,9 @@ namespace School.Api.Controllers
             var userMenu = _userService.GetMenu(userId);
             if (userMenu != null)
             {
-                var result = ApiResult<NavigationMenuOperation>.CreateResult();
-                var apiResult = result.Success(userMenu);
-                return Ok(apiResult);
-
+                return Ok(_apiResult.CreateSuccessResult(userMenu));
             }
-            return StatusCode(500, "Internal server error");
-
+            return InternalServerError();
         }
-
-
     }
 }

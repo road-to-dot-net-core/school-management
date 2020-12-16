@@ -1,4 +1,5 @@
-﻿using School.Contract.ApiResults;
+﻿
+using School.Contract.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +10,10 @@ namespace School.Common.Contracts.Identity
     {
         public string Token { get; set; }
         public string RefreshToken { get; set; }
+       
         public AuthSuccessResponse()
         {
-
+            
         }
-        
     }
 }
