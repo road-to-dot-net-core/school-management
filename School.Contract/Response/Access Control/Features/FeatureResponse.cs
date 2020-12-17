@@ -1,10 +1,11 @@
-﻿using System;
+﻿using School.Contract.ApiResults;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace School.Contract.Response.Access_Control
 {
-    public class FeatureResponse
+    public class FeatureResponse: ISuccessResponse
     {
         public Guid Id { get; set; }
         public String Label { get; set; }

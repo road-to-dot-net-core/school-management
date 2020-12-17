@@ -1,10 +1,11 @@
-﻿using School.Domain.Repositories.Access_Control;
+﻿using Microsoft.EntityFrameworkCore;
+using School.Contract.Response.Access_Control;
+using School.Contract.Response.Access_Control.Permissions;
+using School.Domain.Repositories.Access_Control;
 using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 
 namespace School.Infra.Repositories.Access_Control
 {
@@ -16,27 +17,57 @@ namespace School.Infra.Repositories.Access_Control
         {
             _context = context;
         }
-        public IEnumerable<Permission> FindBy(Expression<Func<Permission, bool>> predicate)
+
+        public PermissionResponse FindByKey(Guid id)
         {
-            IQueryable<Permission> results = _context.Permissions
-                                              .Where(predicate);
-            return results;
+            var data = _context.Permissions
+                .Include(a => a.PermissionFeatures)
+                .ThenInclude(b => b.Feature)
+                .Where(c => c.Id == id)
+                .ToList()
+                .Select(result => new PermissionResponse
+                {
+                    Id = result.Id,
+                    Label = result.Label,
+                    Description = result.Description,
+                    CreatedOn=result.CreatedOn,
+                    Features = result.PermissionFeatures.
+                                    Select(d => new FeatureResponse
+                                    {
+                                        Id = d.FeatureId,
+                                        Action = d.Feature.Action,
+                                        Controller = d.Feature.Controller,
+                                        Description = d.Feature.Description,
+                                        Label = d.Feature.Label
+                                    }).ToList()
+                }).FirstOrDefault();
+
+            return data;
         }
 
-        public Permission FindByKey(Guid id)
+        public IEnumerable<PermissionResponse> GetAll()
         {
-            var permission = _context.Permissions.Find(id);
-            if (permission == null)
-                return null;
-            _context.Entry(permission).Collection(a => a.PermissionFeatures).Load();
+            var data = _context.Permissions
+              .Include(a => a.PermissionFeatures)
+              .ThenInclude(b => b.Feature)
+              .ToList()
+              .Select(result => new PermissionResponse
+              {
+                  Id = result.Id,
+                  Label = result.Label,
+                  Description = result.Description,
+                  Features = result.PermissionFeatures.
+                                  Select(d => new FeatureResponse
+                                  {
+                                      Id = d.FeatureId,
+                                      Action = d.Feature.Action,
+                                      Controller = d.Feature.Controller,
+                                      Description = d.Feature.Description,
+                                      Label = d.Feature.Label
+                                  }).ToList()
+              }).ToList();
 
-            return permission;
-        }
-
-        public IEnumerable<Permission> GetAll()
-        {
-            var permissions = _context.Permissions.ToList();
-            return permissions;
+            return data;
         }
 
         public void Insert(Permission entity)

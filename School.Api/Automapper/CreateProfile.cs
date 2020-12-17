@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using School.Contract.Commands.AccessControl.Permissions;
 using School.Contract.Commands.AccessControl.Users;
+using School.Contract.Requests.Access_Control.Permissions;
 using School.Contract.Requests.Users;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace School.Api.Automapper
         public CreateProfile()
         {
             CreateMap<RegisterUserRequest, RegisterUserCommand>();
+            CreateMap<InsertPermissionRequest, InsertPermissionCommand>();
         }
 
     }

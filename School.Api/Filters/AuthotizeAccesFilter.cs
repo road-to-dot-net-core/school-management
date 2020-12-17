@@ -1,6 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
@@ -11,13 +9,8 @@ using School.Contract.ApiResults.BusinessOperations;
 using School.Service.Access_Control;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace School.Api.Filters
 {

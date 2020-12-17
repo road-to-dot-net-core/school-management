@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Requests\Access Control\Permissions\" />
     <Folder Include="Requests\Access Control\Roles\" />
     <Folder Include="Requests\School management\Sudents\" />
     <Folder Include="Response\School management\" />
