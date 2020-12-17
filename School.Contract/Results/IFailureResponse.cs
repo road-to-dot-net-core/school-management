@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace School.Contract.ApiResults
+namespace School.Contract.Results
 {
     public interface IFailureResponse
     {

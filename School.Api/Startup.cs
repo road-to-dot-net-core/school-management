@@ -13,6 +13,7 @@ using Schools.Domain.Repositories.Access_Control;
 using AutoMapper;
 using School.Api.Automapper;
 using School.MockData;
+using School.Contract.Results;
 
 namespace School.Api
 {
@@ -52,6 +53,7 @@ namespace School.Api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddSingleton<IApiResult, ApiResult>();
             services.AddScoped<IPermissionService, PermissionService>();
 
             services.AddControllers().AddFluentValidation();
