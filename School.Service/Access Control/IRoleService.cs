@@ -1,4 +1,7 @@
-﻿using School.Contract.Response.Access_Control.Roles;
+﻿using PagedList;
+using School.Contract.QueryParameters;
+using School.Contract.Response.Access_Control.Roles;
+using School.Contract.Response.Roles;
 using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -8,6 +11,7 @@ namespace School.Service.Access_Control
 {
     public interface IRoleService
     {
-        IEnumerable<RoleResponse> GetAll();
+        PagedList<RoleResponse> GetAll(QueryParameters queryParameters);
+        RegisterRoleResponse Register(Role role);
     }
 }

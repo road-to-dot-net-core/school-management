@@ -1,4 +1,6 @@
-﻿using School.Contract.Response.Access_Control.Roles;
+﻿using PagedList;
+using School.Contract.QueryParameters;
+using School.Contract.Response.Access_Control.Roles;
 using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ namespace Schools.Domain.Repositories.Access_Control
     public interface IRoleRepository
     {
         Role FindByKey(Guid id);
-        IEnumerable<RoleResponse> GetAll();
+        PagedList<RoleResponse> GetAll(QueryParameters queryParameters);
         void Insert(Role entity);
         IEnumerable<Role> FindBy(Expression<Func<Role, bool>> predicate);
 

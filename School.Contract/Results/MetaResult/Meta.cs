@@ -6,21 +6,24 @@ namespace School.Contract.Results.MetaResult
 {
     public class ResponseMetadata
     {
-        public int total { get; set; }
-        public int limit { get; set; }
-        public int offset { get; set; }
-        public int returned { get; set; }
+        public int PageNumber { get; internal set; }
+        public int PageSize { get; internal set; }
+        public int TotalRecords { get; internal set; }
+        public int PageCount { get; internal set; }
+        public bool HasPreviousPage { get; internal set; }
+        public bool HasNextPage { get; internal set; }
 
         public ResponseMetadata()
         {
 
         }
-        public ResponseMetadata(int total, int limit, int offset, int returned)
+
+        public ResponseMetadata(int pageNumber, int pageSize, int pageCount, int totalRecords)
         {
-            this.total = total;
-            this.limit = limit;
-            this.offset = offset;
-            this.returned = returned;
+            PageNumber = pageNumber;
+            PageSize = pageSize;
+            TotalRecords = totalRecords;
+            PageCount = pageCount;
         }
     }
 }

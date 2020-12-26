@@ -12,6 +12,7 @@ namespace School.Contract.Results
 
         public TechnicalFailureResponse(string errorMessage)
         {
+            InnerErrorMessages = new List<string>();
             ErrorMessage = errorMessage;
         }
         public TechnicalFailureResponse(Exception exception) : this(exception.Message)

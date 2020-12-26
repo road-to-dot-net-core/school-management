@@ -12,12 +12,13 @@ namespace Schools.Domain.Models.Access_Control
 
         public bool CanBeDeleted { get; private set; }
 
-        public virtual ICollection<RolePermission> RolePermissions { get; set; }
+        private readonly List<RolePermission> _rolePermissions = new List<RolePermission>();
+        public virtual IReadOnlyList<RolePermission> RolePermissions  => _rolePermissions.ToList();
+
         public Role()
         {
-
         }
-        public Role(string name, string description, List<Guid> permissions)
+        public Role(string name, string description,List<Guid> permissions)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -28,14 +29,14 @@ namespace Schools.Domain.Models.Access_Control
         }
         private void UpdatePermissions(List<Guid> permissions)
         {
-            List<Guid> toAdd = permissions.Where(a => RolePermissions.Where(b => b.Permission.Id == a).Count() == 0).ToList();
-            List<RolePermission> toDelete = RolePermissions.Where(a => permissions.Where(b => b == a.Permission.Id).Count() == 0)
-                .ToList();
+            List<Guid> toAdd = permissions.Where(a => _rolePermissions.Where(b => b.Permission.Id == a).Count() == 0).ToList();
+            List<RolePermission> toDelete = _rolePermissions.Where(a => permissions.Where(b => b == a.Permission.Id).Count() == 0)
+                                                            .ToList();
 
             if (toDelete.Count() != 0)
-                toDelete.ForEach(a => RolePermissions.Remove(a));
+                toDelete.ForEach(a => _rolePermissions.Remove(a));
             if (toAdd.Count() != 0)
-                toAdd.ForEach(a => RolePermissions.Add(RolePermission.Create(this.Id, a)));
+                toAdd.ForEach(a => _rolePermissions.Add(RolePermission.Create(this.Id, a)));
 
         }
     }

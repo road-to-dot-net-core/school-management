@@ -1,4 +1,6 @@
-﻿using School.Contract.Response.Access_Control.Roles;
+﻿using PagedList;
+using School.Contract.QueryParameters;
+using School.Contract.Response.Access_Control.Roles;
 using Schools.Domain.Models.Access_Control;
 using Schools.Domain.Repositories.Access_Control;
 using System;
@@ -36,17 +38,19 @@ namespace School.Infra.Repositories.Access_Control
         }
 
 
-        public IEnumerable<RoleResponse> GetAll()
+        public PagedList<RoleResponse> GetAll(QueryParameters queryParameters)
         {
-            //  var roles = _context.Roles.ToList();
             var roles = (from x in _context.Roles
+                         orderby x.CreatedOn descending
                          select new RoleResponse
                          {
-                             Id=x.Id,
-                             Name=x.Name,
-                             Description=x.Description
-                         }).ToList();
-            return roles;
+                             Id = x.Id,
+                             Name = x.Name,
+                             Description = x.Description,
+                             IsActive = !x.Deleted
+                         });
+
+            return new PagedList<RoleResponse>(roles, queryParameters.PageNumber, queryParameters.PageSize);
         }
 
         public void Insert(Role entity)

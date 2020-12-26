@@ -53,6 +53,8 @@ namespace School.Api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IPermissionService, PermissionService>();
+
             services.AddSingleton<IApiResult, ApiResult>();
 
             services.AddControllers().AddFluentValidation();

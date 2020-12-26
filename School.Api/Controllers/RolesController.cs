@@ -6,6 +6,13 @@ using School.Contract.Response.Access_Control.Roles;
 using School.Contract.Results;
 using School.Contract.Results.MetaResult;
 using System;
+using School.Contract.Response.Roles;
+using School.Contract.Requests.Access_Control.Roles;
+using Schools.Domain.Models.Access_Control;
+using System.Collections.Generic;
+using School.Contract.QueryParameters;
+using System.Linq;
+using PagedList;
 
 namespace School.Api.Controllers.V1
 {
@@ -25,19 +32,31 @@ namespace School.Api.Controllers.V1
         [HttpGet]
         // [Route(ApiRoutes.Roles.GetAll)]
         //[AuthorizeAccess("GetAllRoles")]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] QueryParameters queryParameters)
         {
             try
             {
-                return Ok(
-                    _apiResult.CreateSuccessResult(
-                        new AllRoleResponse(_roleService.GetAll()), new ResponseMetadata(1000, 10, 51, 23)));
+                var result = _roleService.GetAll(queryParameters);
+                return Ok(_apiResult.CreateSuccessPageListResult<RoleResponse>(result));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return InternalServerError();
+                return InternalServerError(ex);
             }
-          
+        }
+
+        [HttpPost]
+        public IActionResult Register(RegisterRoleRequest request)
+        {
+            try
+            {
+                var response = _roleService.Register(new Role(request.Name, request.Description, request.Permissions));
+                return Ok(_apiResult.CreateSuccessResult(response));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

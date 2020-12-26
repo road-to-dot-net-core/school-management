@@ -1,7 +1,10 @@
-﻿using School.Contract.Results.FailureResult;
+﻿using PagedList;
+using School.Contract.Results.FailureResult;
 using School.Contract.Results.MetaResult;
 using School.Contract.Results.SuccessResults;
 using System;
+using System.Linq;
+
 
 namespace School.Contract.Results
 {
@@ -12,25 +15,26 @@ namespace School.Contract.Results
             return new SuccessResult(response);
         }
 
-        public  object CreateSuccessResult(ISuccessResponse response, ResponseMetadata responseMetadata)
+        public object CreateSuccessPageListResult<T>(PagedList<T> response) where T : ISuccessResponse
         {
-            return new SuccessWithMetadataResult(response, responseMetadata);
+            return new SuccessWithMetadataResult<T>(response);
         }
 
-        public  object CreateFailureResult(string message)
+        public object CreateFailureResult(string message)
         {
             return new FailureApiResult(new TechnicalFailureResponse(message)).GetError();
         }
 
-        public  object CreateFailureResult(IFailureResponse response)
+        public object CreateFailureResult(IFailureResponse response)
         {
             return new FailureApiResult(response).GetError();
         }
 
-        public  object CreateFailureResult(Exception ex)
+        public object CreateFailureResult(Exception ex)
         {
             return new TechnicalFailureResponse(ex);
         }
 
+      
     }
 }

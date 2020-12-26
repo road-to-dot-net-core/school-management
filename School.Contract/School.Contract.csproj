@@ -5,14 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PageLists\PagedList.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PageLists\" />
     <Folder Include="Requests\Access Control\Permissions\" />
-    <Folder Include="Requests\Access Control\Roles\" />
     <Folder Include="Requests\School management\Sudents\" />
     <Folder Include="Response\School management\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="PagedList" Version="1.17.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
   </ItemGroup>
 

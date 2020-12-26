@@ -1,4 +1,7 @@
-﻿using School.Contract.Response.Access_Control.Roles;
+﻿using PagedList;
+using School.Contract.QueryParameters;
+using School.Contract.Response.Access_Control.Roles;
+using School.Contract.Response.Roles;
 using Schools.Domain.Models.Access_Control;
 using Schools.Domain.Repositories.Access_Control;
 using System;
@@ -15,11 +18,16 @@ namespace School.Service.Access_Control
         {
             _roleRepository = roleRepository;
         }
-        public IEnumerable<RoleResponse> GetAll()
+        public PagedList<RoleResponse> GetAll(QueryParameters queryParameters)
         {
-            return _roleRepository.GetAll();
+            return _roleRepository.GetAll(queryParameters);
         }
 
-     
+        public RegisterRoleResponse Register(Role role)
+        {
+             _roleRepository.Insert(role);
+            _roleRepository.Save();
+            return new RegisterRoleResponse() { RoleId = role.Id };
+        }
     }
 }
