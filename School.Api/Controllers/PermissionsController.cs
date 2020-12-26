@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using School.Contract.QueryParameters;
 using School.Contract.Response.Access_Control.Permissions;
 using School.Contract.Results;
 using School.Service.Access_Control;
@@ -27,9 +28,10 @@ namespace School.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] QueryParameters queryParameters)
         {
-            return Ok(_apiResult.CreateSuccessResult(new AllPermissionResponse(_permissionService.GetAll())));
+            return Ok(_apiResult
+                    .CreateSuccessPageListResult<PermissionResponse>(_permissionService.GetAll(queryParameters)));
         }
     }
 }

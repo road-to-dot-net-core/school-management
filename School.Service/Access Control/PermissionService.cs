@@ -1,4 +1,6 @@
-﻿using School.Contract.Response.Access_Control.Permissions;
+﻿using PagedList;
+using School.Contract.QueryParameters;
+using School.Contract.Response.Access_Control.Permissions;
 using School.Domain.Repositories.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,9 @@ namespace School.Service.Access_Control
             this._permissionRepository = permissionRepository;
         }
 
-        public IEnumerable<PermissionResponse> GetAll()
+        public PagedList<PermissionResponse> GetAll(QueryParameters queryParameters)
         {
-            return _permissionRepository
-                        .GetAll()
-                        .Select(p => new PermissionResponse() { Id = p.Id, Name = p.Label, Description = p.Description })
-                        .ToList() ;
+            return _permissionRepository.GetAll(queryParameters);
 
         }
     }

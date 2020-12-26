@@ -1,4 +1,7 @@
-﻿using School.Domain.Repositories.Access_Control;
+﻿using PagedList;
+using School.Contract.QueryParameters;
+using School.Contract.Response.Access_Control.Permissions;
+using School.Domain.Repositories.Access_Control;
 using Schools.Domain.Models.Access_Control;
 using System;
 using System.Collections.Generic;
@@ -33,10 +36,11 @@ namespace School.Infra.Repositories.Access_Control
             return permission;
         }
 
-        public IEnumerable<Permission> GetAll()
+        public PagedList<PermissionResponse> GetAll(QueryParameters queryParameters)
         {
-            var permissions = _context.Permissions.ToList();
-            return permissions;
+            return new PagedList<PermissionResponse>(
+                                _context.Permissions.Select(p => new PermissionResponse() { Id = p.Id, Name = p.Label, Description = p.Description }),
+                        queryParameters.PageNumber, queryParameters.PageSize);
         }
 
         public void Insert(Permission entity)
