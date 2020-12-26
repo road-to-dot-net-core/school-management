@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="PageLists\PagedList.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PageLists\" />
     <Folder Include="Requests\Access Control\Permissions\" />
     <Folder Include="Requests\School management\Sudents\" />
     <Folder Include="Response\School management\" />
