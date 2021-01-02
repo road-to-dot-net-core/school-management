@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using School.Api.Filters;
 using School.Service.Access_Control;
 using Microsoft.AspNetCore.Cors;
 using School.Contract.Response.Access_Control.Roles;

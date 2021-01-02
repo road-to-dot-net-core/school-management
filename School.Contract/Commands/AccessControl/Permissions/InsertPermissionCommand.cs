@@ -6,6 +6,7 @@ namespace School.Contract.Commands.AccessControl.Permissions
 {
     public class InsertPermissionCommand
     {
+        public Guid Id { get; set; }
         public string Label { get; set; }
         public string Description { get; set; }
         public Guid CreatedBy { get; set; }

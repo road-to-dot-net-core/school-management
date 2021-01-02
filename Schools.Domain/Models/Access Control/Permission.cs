@@ -46,6 +46,10 @@ namespace Schools.Domain.Models.Access_Control
                 toAdd.ForEach(a => _permissionFeatures.Add(PermissionFeature.Create(this.Id, a)));
 
         }
+        public void Delete(Guid by,string reason)
+        {
+            this.MarkAsDeleted(by, reason);
+        }
 
     }
 }

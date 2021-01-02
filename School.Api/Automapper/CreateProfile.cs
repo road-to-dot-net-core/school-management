@@ -15,7 +15,11 @@ namespace School.Api.Automapper
         public CreateProfile()
         {
             CreateMap<RegisterUserRequest, RegisterUserCommand>();
+
             CreateMap<InsertPermissionRequest, InsertPermissionCommand>();
+            CreateMap<UpdatePermissionRequest, UpdatePermissionCommand>();
+            CreateMap<DeletePermissionRequest, DeletePermissionCommand>();
+
         }
 
     }

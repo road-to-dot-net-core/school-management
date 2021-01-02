@@ -19,10 +19,17 @@ namespace Schools.Domain.Models
 
 
 
-        public Guid? DeletedBy { get; set; }
-        public DateTime? DeletedOn { get; set; }
+        public Guid? DeletedBy { get; private set; }
+        public DateTime? DeletedOn { get; private set; }
         public bool Deleted { get { return DeletedOn != null; } }
         public string DeleteReason { get; private set; }
+
+        public void MarkAsDeleted(Guid by,string reason)
+        {
+            DeleteReason = reason;
+            DeletedBy = by;
+            DeletedOn = DateTime.UtcNow;
+        }
 
 
     }

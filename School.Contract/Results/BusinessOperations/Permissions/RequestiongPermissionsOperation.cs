@@ -4,7 +4,7 @@ using System.Text;
 
 namespace School.Contract.ApiResults.BusinessOperations
 {
-    public class RequestiongPermissionsOperation : IBusinessOperation
+    public class RequestiongPermissionsOperation 
     {
         public string OperationName => "Requestiong All Permissions Operation";
 

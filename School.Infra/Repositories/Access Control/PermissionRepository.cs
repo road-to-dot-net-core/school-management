@@ -18,7 +18,18 @@ namespace School.Infra.Repositories.Access_Control
             _context = context;
         }
 
-        public PermissionResponse FindByKey(Guid id)
+        public Permission FindByKey(Guid id)
+        {
+            var data = _context.Permissions
+                .Include(a => a.PermissionFeatures)
+                .ThenInclude(b => b.Feature)
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+
+            return data;
+        }
+
+        public PermissionResponse GetById(Guid id)
         {
             var data = _context.Permissions
                 .Include(a => a.PermissionFeatures)
@@ -48,6 +59,7 @@ namespace School.Infra.Repositories.Access_Control
         public IEnumerable<PermissionResponse> GetAll()
         {
             var data = _context.Permissions
+                .Where(a=>a.DeletedOn==null)
               .Include(a => a.PermissionFeatures)
               .ThenInclude(b => b.Feature)
               .ToList()

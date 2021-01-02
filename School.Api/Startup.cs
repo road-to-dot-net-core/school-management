@@ -12,7 +12,6 @@ using School.Infra.Repositories.Access_Control;
 using Schools.Domain.Repositories.Access_Control;
 using AutoMapper;
 using School.Api.Automapper;
-using School.MockData;
 using School.Contract.Results;
 
 namespace School.Api

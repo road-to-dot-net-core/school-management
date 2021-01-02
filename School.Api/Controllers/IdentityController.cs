@@ -2,14 +2,11 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using School.Common.Contracts.Identity;
-using School.Contract;
 using School.Contract.Requests.Access_Control.Identity;
 using School.Contract.Results;
 using School.Service.Access_Control;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace School.Api.Controllers.V1
 {

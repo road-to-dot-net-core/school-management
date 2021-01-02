@@ -15,5 +15,8 @@ namespace School.Service.Access_Control
         bool Insert(InsertPermissionCommand user);
         PermissionResponse GetById(Guid id);
 
+        Result Edit(UpdatePermissionCommand cmd);
+        Result Delete(DeletePermissionCommand cmd);
+
     }
 }

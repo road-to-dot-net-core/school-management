@@ -11,7 +11,9 @@ namespace School.Domain.Repositories.Access_Control
 {
     public interface IPermissionRepository
     {
-        PermissionResponse FindByKey(Guid id);
+        Permission FindByKey(Guid id);
+        PermissionResponse GetById(Guid id);
+
         IEnumerable<PermissionResponse> GetAll();
         void Insert(Permission entity);
 
